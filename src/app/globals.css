@@ -1,0 +1,26 @@
+/* Self-hosted fonts (via @fontsource) instead of next/font/google, so the
+   build doesn't need a runtime fetch to fonts.googleapis.com. */
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/space-grotesk/500.css';
+@import '@fontsource/space-grotesk/600.css';
+@import '@fontsource/space-grotesk/700.css';
+@import '@fontsource/pacifico/400.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-inter: 'Inter', sans-serif;
+  --font-space-grotesk: 'Space Grotesk', sans-serif;
+  --font-pacifico: 'Pacifico', cursive;
+}
+
+html,
+body {
+  background: #ffffff;
+  color: #221211;
+}
