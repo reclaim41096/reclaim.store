@@ -3,7 +3,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ProductCard } from '@/components/ProductCard';
 import { CategoryIcon } from '@/components/CategoryIcon';
-import { HeroSlideshow } from '@/components/HeroSlideshow';
+import { FullHero } from '@/components/FullHero';
 import { getSectionsWithCategories, getActiveProducts } from '@/lib/queries';
 
 export const revalidate = 60;
@@ -30,42 +30,12 @@ export default async function HomePage() {
       </div>
       <Header />
 
-      {/* Hero */}
-      <section className="flex flex-wrap items-center gap-12 bg-brand-tint px-6 py-16 md:px-12">
-        <div className="flex min-w-0 flex-1 basis-[440px] flex-col gap-5">
-          <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[13px] font-semibold text-brand-dark">
-            New • Nationwide delivery
-          </span>
-          <h1 className="text-5xl font-display font-bold leading-[1.08]">
-            Cleaner spaces.
-            <br />
-            Fresher living.
-            <br />
-            Better environments.
-          </h1>
-          <p className="max-w-[480px] text-[17px] leading-relaxed text-ink-muted">
-            Reliable, affordable cleaning solutions for your home, office or business — from hand
-            wash to air fresheners, glass cleaners and more. Plus pure, natural honey from
-            Reclaim&apos;s beverages line.
-          </p>
-          <div className="flex flex-wrap gap-3.5">
-            <Link href="/shop" className="rounded-full bg-brand px-6 py-3.5 text-[15px] font-semibold text-white hover:bg-brand-dark">
-              Shop Products
-            </Link>
-            <Link href="/contact" className="rounded-full border border-brand-border px-6 py-3.5 text-[15px] font-semibold hover:border-brand hover:text-brand">
-              Wholesale Enquiries
-            </Link>
-          </div>
-        </div>
-        <div className="min-w-0 flex-1 basis-[380px]">
-          <HeroSlideshow slides={heroSlides} />
-        </div>
-      </section>
+      <FullHero slides={heroSlides} />
 
       {/* Categories */}
       <section className="px-6 py-16 md:px-12">
         <span className="mb-2 inline-block rounded-full bg-brand-tint px-4 py-1.5 text-[13px] font-bold text-brand">
-          Cleaning Products
+          Products
         </span>
         <div className="mb-7 flex flex-wrap items-baseline justify-between gap-3">
           <h2 className="font-display text-[28px] font-bold">Shop by category</h2>
@@ -89,38 +59,24 @@ export default async function HomePage() {
               </div>
             </Link>
           ))}
+          {honey && (
+            <Link
+              href="/shop#beverages"
+              className="flex flex-col gap-3.5 rounded-2xl border border-[#F3E6C2] bg-[#FFF9EC] p-6"
+            >
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gold-tint">
+                <CategoryIcon slug="honey" color="#A6760A" />
+              </div>
+              <div>
+                <div className="text-[16px] font-bold">Beverages</div>
+                <div className="mt-1 text-[13px] text-ink-light">
+                  Natural Tissa honey, from our beverages line
+                </div>
+              </div>
+            </Link>
+          )}
         </div>
       </section>
-
-      {/* Beverages */}
-      {honey && (
-        <section id="beverages" className="px-6 pb-16 md:px-12">
-          <span className="mb-2 inline-block rounded-full bg-gold-tint px-4 py-1.5 text-[13px] font-bold text-gold-dark">
-            Beverages
-          </span>
-          <div className="mb-7 flex flex-wrap items-baseline justify-between gap-3">
-            <h2 className="font-display text-[28px] font-bold">From our beverages line</h2>
-            <Link href="/shop#beverages" className="text-sm font-semibold">
-              View all →
-            </Link>
-          </div>
-          <div className="flex flex-wrap items-center gap-7 rounded-2xl border border-[#F3E6C2] bg-[#FFF9EC] p-8">
-            <div className="flex h-[140px] w-[140px] flex-none items-center justify-center rounded-2xl bg-gold-tint">
-              <CategoryIcon slug="honey" size={64} color="#A6760A" />
-            </div>
-            <div className="min-w-0 flex-1 basis-[300px]">
-              <div className="mb-1.5 text-[19px] font-bold">Pure Honey</div>
-              <p className="max-w-[480px] text-sm leading-relaxed text-ink-muted">
-                Natural, unprocessed honey — sourced and bottled with the same care Reclaim puts
-                into every cleaning product.
-              </p>
-            </div>
-            <Link href="/shop#beverages" className="rounded-full bg-gold-dark px-6 py-3.5 text-[15px] font-semibold text-white">
-              Explore Beverages
-            </Link>
-          </div>
-        </section>
-      )}
 
       {/* Best sellers */}
       <section className="bg-[#FCF7F6] px-6 py-16 md:px-12">

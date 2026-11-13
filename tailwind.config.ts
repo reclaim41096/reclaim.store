@@ -5,7 +5,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        display: ['var(--font-space-grotesk)', 'sans-serif'],
+        display: ['var(--font-bricolage)', 'sans-serif'],
         wordmark: ['var(--font-pacifico)', 'cursive'],
         sans: ['var(--font-inter)', 'sans-serif'],
       },

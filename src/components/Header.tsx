@@ -8,19 +8,13 @@ export function Header() {
   const { count } = useCart();
 
   return (
-    <header className="flex flex-wrap items-center justify-between gap-4 border-b border-brand-border px-6 py-5 md:px-12">
-      <Link href="/" className="flex items-center">
-        <Logo height={30} />
-      </Link>
-      <nav className="flex flex-wrap items-center gap-7">
+    <header className="relative flex flex-wrap items-center justify-between gap-4 border-b border-brand-border px-6 py-5 md:px-12">
+      <nav className="flex flex-wrap items-center gap-7 order-2 md:order-1">
         <Link href="/" className="text-sm font-medium text-ink hover:text-brand">
           Home
         </Link>
         <Link href="/shop" className="text-sm font-medium text-ink hover:text-brand">
-          Cleaning
-        </Link>
-        <Link href="/shop#beverages" className="text-sm font-medium text-ink hover:text-brand">
-          Beverages
+          Products
         </Link>
         <Link href="/about" className="text-sm font-medium text-ink hover:text-brand">
           About
@@ -29,7 +23,15 @@ export function Header() {
           Contact
         </Link>
       </nav>
-      <div className="flex items-center gap-4">
+
+      <Link
+        href="/"
+        className="order-1 flex items-center md:absolute md:left-1/2 md:top-1/2 md:order-none md:-translate-x-1/2 md:-translate-y-1/2"
+      >
+        <Logo height={46} />
+      </Link>
+
+      <div className="order-3 flex items-center gap-4">
         <Link href="/cart" aria-label="Cart" className="relative flex p-1.5">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
             <path
