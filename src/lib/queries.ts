@@ -6,6 +6,7 @@ export type ProductSummary = {
   name: string;
   base_price: number;
   status: 'active' | 'draft' | 'out_of_stock';
+  cover_image_url: string | null;
   category: { slug: string; name: string; section: { slug: string; name: string } };
   variant_count: number;
   price_range: { min: number; max: number } | null;
@@ -29,7 +30,7 @@ export async function getActiveProducts(sectionSlug?: string) {
   let query = supabase
     .from('products')
     .select(
-      `id, slug, name, base_price, status,
+      `id, slug, name, base_price, status, cover_image_url,
        category:categories!inner(slug, name, section:sections!inner(slug, name)),
        product_variants(id, price)`,
     )
@@ -49,6 +50,7 @@ export async function getActiveProducts(sectionSlug?: string) {
       name: p.name,
       base_price: Number(p.base_price),
       status: p.status,
+      cover_image_url: p.cover_image_url ?? null,
       category: p.category,
       variant_count: prices.length,
       price_range: prices.length ? { min: Math.min(...prices), max: Math.max(...prices) } : null,
@@ -62,8 +64,9 @@ export async function getProductBySlug(slug: string) {
     .from('products')
     .select(
       `*, category:categories(slug, name, section:sections(slug, name)),
+       product_images(url, position),
        product_options(id, name, position, product_option_values(id, value, position)),
-       product_variants(id, sku, price, stock, variant_option_values(option_value_id))`,
+       product_variants(id, sku, price, stock, image_url, variant_option_values(option_value_id))`,
     )
     .eq('slug', slug)
     .maybeSingle();
@@ -75,7 +78,7 @@ export async function getRelatedProducts(categorySlug: string, excludeSlug: stri
   const supabase = createClient();
   const { data } = await supabase
     .from('products')
-    .select('id, slug, name, base_price, category:categories!inner(slug)')
+    .select('id, slug, name, base_price, cover_image_url, category:categories!inner(slug)')
     .eq('category.slug', categorySlug)
     .neq('slug', excludeSlug)
     .limit(limit);

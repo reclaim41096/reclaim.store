@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { formatNaira } from '@/lib/format';
 import { CategoryIcon } from './CategoryIcon';
 import type { ProductSummary } from '@/lib/queries';
@@ -29,7 +30,17 @@ export function ProductCard({ product }: { product: ProductSummary }) {
             Coming soon
           </span>
         )}
-        <CategoryIcon slug={product.category.slug} size={56} color={iconColor} />
+        {product.cover_image_url ? (
+          <Image
+            src={product.cover_image_url}
+            alt={product.name}
+            fill
+            sizes="(min-width: 1024px) 25vw, 50vw"
+            className="object-contain p-4"
+          />
+        ) : (
+          <CategoryIcon slug={product.category.slug} size={56} color={iconColor} />
+        )}
       </div>
       <div className="flex flex-col gap-1.5 p-4">
         <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: iconColor }}>
