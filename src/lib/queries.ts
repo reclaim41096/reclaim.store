@@ -10,6 +10,7 @@ export type ProductSummary = {
   category: { slug: string; name: string; section: { slug: string; name: string } };
   variant_count: number;
   price_range: { min: number; max: number } | null;
+  price_unit: string | null;
 };
 
 export async function getSectionsWithCategories() {
@@ -32,7 +33,7 @@ export async function getActiveProducts(sectionSlug?: string) {
     .select(
       `id, slug, name, base_price, status, cover_image_url,
        category:categories!inner(slug, name, section:sections!inner(slug, name)),
-       product_variants(id, price)`,
+       product_variants(id, price, price_unit)`,
     )
     .in('status', ['active', 'draft', 'out_of_stock']);
 
@@ -43,7 +44,9 @@ export async function getActiveProducts(sectionSlug?: string) {
   const { data } = await query;
 
   return (data ?? []).map((p: any) => {
-    const prices: number[] = (p.product_variants ?? []).map((v: any) => Number(v.price));
+    const variants = p.product_variants ?? [];
+    const prices: number[] = variants.map((v: any) => Number(v.price));
+    const units = new Set(variants.map((v: any) => v.price_unit).filter(Boolean));
     return {
       id: p.id,
       slug: p.slug,
@@ -54,6 +57,7 @@ export async function getActiveProducts(sectionSlug?: string) {
       category: p.category,
       variant_count: prices.length,
       price_range: prices.length ? { min: Math.min(...prices), max: Math.max(...prices) } : null,
+      price_unit: units.size === 1 ? ([...units][0] as string) : null,
     } satisfies ProductSummary;
   });
 }
@@ -66,7 +70,7 @@ export async function getProductBySlug(slug: string) {
       `*, category:categories(slug, name, section:sections(slug, name)),
        product_images(url, position),
        product_options(id, name, position, product_option_values(id, value, position)),
-       product_variants(id, sku, price, stock, image_url, variant_option_values(option_value_id))`,
+       product_variants(id, sku, price, stock, image_url, price_unit, variant_option_values(option_value_id))`,
     )
     .eq('slug', slug)
     .maybeSingle();

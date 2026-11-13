@@ -32,6 +32,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
     price: Number(v.price),
     stock: v.stock,
     imageUrl: v.image_url ?? null,
+    priceUnit: v.price_unit ?? null,
     optionValueIds: (v.variant_option_values ?? []).map((vov: any) => vov.option_value_id),
   }));
 

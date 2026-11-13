@@ -15,6 +15,7 @@ type Variant = {
   price: number;
   stock: number;
   imageUrl: string | null;
+  priceUnit: string | null;
   optionValueIds: string[];
 };
 
@@ -128,7 +129,12 @@ export function VariantPicker({
               </div>
             ))}
 
-            <div className="text-2xl font-bold">{formatNaira(selectedVariant.price)}</div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-bold">{formatNaira(selectedVariant.price)}</span>
+              {selectedVariant.priceUnit && (
+                <span className="text-sm font-medium text-ink-faint">/{selectedVariant.priceUnit}</span>
+              )}
+            </div>
 
             <div className="flex items-center gap-4">
               <div className="flex items-center overflow-hidden rounded-full border border-brand-border">

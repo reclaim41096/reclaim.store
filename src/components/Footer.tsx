@@ -1,11 +1,14 @@
 import Link from 'next/link';
+import { Logo } from './Logo';
 
 export function Footer() {
   return (
-    <footer id="contact" className="border-t border-brand-border bg-[#FCF5F3] px-6 py-14 md:px-12">
+    <footer className="border-t border-brand-border bg-[#FCF5F3] px-6 py-14 md:px-12">
       <div className="mb-10 grid grid-cols-2 gap-8 md:grid-cols-4">
         <div>
-          <div className="mb-2.5 font-wordmark text-2xl text-brand">Reclaim</div>
+          <div className="mb-2.5">
+            <Logo height={26} />
+          </div>
           <p className="text-sm leading-relaxed text-ink-light">
             Your trusted partner in cleanliness and freshness.
           </p>
@@ -23,9 +26,8 @@ export function Footer() {
         <div>
           <div className="mb-3 text-sm font-bold">Company</div>
           <div className="flex flex-col gap-2 text-sm text-ink-light">
-            <span>About Reclaim</span>
-            <span>Wholesale</span>
-            <span>Contact</span>
+            <Link href="/about">About Reclaim</Link>
+            <Link href="/contact">Contact</Link>
           </div>
         </div>
         <div>

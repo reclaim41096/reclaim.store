@@ -3,6 +3,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ProductCard } from '@/components/ProductCard';
 import { CategoryIcon } from '@/components/CategoryIcon';
+import { HeroSlideshow } from '@/components/HeroSlideshow';
 import { getSectionsWithCategories, getActiveProducts } from '@/lib/queries';
 
 export const revalidate = 60;
@@ -17,10 +18,15 @@ export default async function HomePage() {
     .slice(0, 4);
   const honey = products.find((p) => p.category.slug === 'honey');
 
+  const heroSlides = products
+    .filter((p) => p.cover_image_url)
+    .slice(0, 6)
+    .map((p) => ({ src: p.cover_image_url as string, name: p.name }));
+
   return (
     <>
       <div className="bg-ink py-2.5 text-center text-[13px] font-medium text-white">
-        Free delivery on orders over ₦15,000 within Lagos • Wholesale pricing available for bulk orders
+        Nationwide delivery • Wholesale pricing available for bulk orders
       </div>
       <Header />
 
@@ -46,24 +52,13 @@ export default async function HomePage() {
             <Link href="/shop" className="rounded-full bg-brand px-6 py-3.5 text-[15px] font-semibold text-white hover:bg-brand-dark">
               Shop Products
             </Link>
-            <Link href="#wholesale" className="rounded-full border border-brand-border px-6 py-3.5 text-[15px] font-semibold hover:border-brand hover:text-brand">
+            <Link href="/contact" className="rounded-full border border-brand-border px-6 py-3.5 text-[15px] font-semibold hover:border-brand hover:text-brand">
               Wholesale Enquiries
             </Link>
           </div>
         </div>
-        <div className="grid min-w-0 flex-1 basis-[380px] grid-cols-2 gap-5">
-          <div className="flex aspect-square items-center justify-center rounded-2xl border border-brand-border bg-white">
-            <CategoryIcon slug="hand-wash" size={48} />
-          </div>
-          <div className="mt-7 flex aspect-square items-center justify-center rounded-2xl bg-brand">
-            <CategoryIcon slug="glass-cleaner" size={48} color="#fff" />
-          </div>
-          <div className="flex aspect-square items-center justify-center rounded-2xl bg-gold">
-            <CategoryIcon slug="other-household" size={48} color="#221211" />
-          </div>
-          <div className="-mt-7 flex aspect-square items-center justify-center rounded-2xl border border-brand-border bg-white">
-            <CategoryIcon slug="air-freshener" size={48} />
-          </div>
+        <div className="min-w-0 flex-1 basis-[380px]">
+          <HeroSlideshow slides={heroSlides} />
         </div>
       </section>
 
@@ -142,19 +137,18 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Wholesale CTA */}
-      <section id="wholesale" className="mx-6 mb-16 flex flex-wrap items-center justify-between gap-6 rounded-3xl bg-ink p-12 md:mx-12">
+      {/* About Reclaim teaser */}
+      <section className="mx-6 mb-16 flex flex-wrap items-center justify-between gap-6 rounded-3xl bg-ink p-12 md:mx-12">
         <div className="max-w-[560px]">
-          <h2 className="mb-2.5 font-display text-2xl font-bold text-white">
-            Buying for your business?
-          </h2>
+          <h2 className="mb-2.5 font-display text-2xl font-bold text-white">About Reclaim</h2>
           <p className="text-[15px] leading-relaxed text-[#B9C7BF]">
-            Get wholesale pricing on bulk orders for offices, hotels, schools and distributors.
+            A Lagos-based brand across two lines: cleaning products for home and business, and
+            natural Tissa honey. Wholesale pricing available on bulk orders.
           </p>
         </div>
-        <a href="mailto:reclaim41096@gmail.com" className="rounded-full bg-brand px-6 py-3.5 text-[15px] font-semibold text-white hover:bg-brand-dark">
-          Request Wholesale Pricing
-        </a>
+        <Link href="/about" className="rounded-full bg-brand px-6 py-3.5 text-[15px] font-semibold text-white hover:bg-brand-dark">
+          Learn More
+        </Link>
       </section>
 
       <Footer />

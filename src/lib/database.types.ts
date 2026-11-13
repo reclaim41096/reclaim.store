@@ -52,6 +52,36 @@ export type Database = {
           },
         ]
       }
+      contact_messages: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          phone: string | null
+          subject: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          phone?: string | null
+          subject?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          phone?: string | null
+          subject?: string | null
+        }
+        Relationships: []
+      }
       order_items: {
         Row: {
           id: string
@@ -239,7 +269,9 @@ export type Database = {
         Row: {
           created_at: string
           id: string
+          image_url: string | null
           price: number
+          price_unit: string | null
           product_id: string
           sku: string | null
           stock: number
@@ -247,7 +279,9 @@ export type Database = {
         Insert: {
           created_at?: string
           id?: string
+          image_url?: string | null
           price: number
+          price_unit?: string | null
           product_id: string
           sku?: string | null
           stock?: number
@@ -255,7 +289,9 @@ export type Database = {
         Update: {
           created_at?: string
           id?: string
+          image_url?: string | null
           price?: number
+          price_unit?: string | null
           product_id?: string
           sku?: string | null
           stock?: number

@@ -10,7 +10,6 @@ import { createClient } from '@/lib/supabase/client';
 import { formatNaira } from '@/lib/format';
 
 const DELIVERY_FEE = 1000;
-const FREE_DELIVERY_THRESHOLD = 15000;
 const NIGERIAN_STATES = ['Lagos', 'Ogun', 'Oyo', 'Abuja (FCT)', 'Rivers', 'Kano', 'Other'];
 
 function generateOrderCode() {
@@ -34,7 +33,7 @@ export default function CheckoutPage() {
     paymentMethod: 'pay_on_delivery' as 'card' | 'bank_transfer' | 'pay_on_delivery',
   });
 
-  const delivery = subtotal >= FREE_DELIVERY_THRESHOLD || subtotal === 0 ? 0 : DELIVERY_FEE;
+  const delivery = subtotal === 0 ? 0 : DELIVERY_FEE;
   const total = subtotal + delivery;
 
   const handleSubmit = async () => {
@@ -219,7 +218,7 @@ export default function CheckoutPage() {
             </div>
             <div className="flex justify-between">
               <span className="text-ink-light">Delivery</span>
-              <span>{delivery === 0 ? 'Free' : formatNaira(delivery)}</span>
+              <span>{formatNaira(delivery)}</span>
             </div>
           </div>
           <div className="h-px bg-brand-border" />

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { CartProvider } from '@/components/CartProvider';
+import { CursorGlow } from '@/components/CursorGlow';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -12,6 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className="font-sans">
+        <CursorGlow />
         <CartProvider>{children}</CartProvider>
       </body>
     </html>

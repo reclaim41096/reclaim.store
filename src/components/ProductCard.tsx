@@ -10,6 +10,7 @@ export function ProductCard({ product }: { product: ProductSummary }) {
       ? formatNaira(product.price_range.min)
       : `${formatNaira(product.price_range.min)} – ${formatNaira(product.price_range.max)}`
     : formatNaira(product.base_price);
+  const unitSuffix = product.price_unit ? ` /${product.price_unit}` : '';
 
   const tint = product.category.section.slug === 'beverages' ? 'bg-gold-tint' : 'bg-brand-tint';
   const iconColor = product.category.section.slug === 'beverages' ? '#A6760A' : '#E31E24';
@@ -50,7 +51,10 @@ export function ProductCard({ product }: { product: ProductSummary }) {
         {product.variant_count > 0 && (
           <div className="text-[11px] text-ink-light">{product.variant_count} variants</div>
         )}
-        <div className="mt-0.5 font-bold">{price}</div>
+        <div className="mt-0.5 font-bold">
+          {price}
+          {unitSuffix && <span className="text-xs font-medium text-ink-faint">{unitSuffix}</span>}
+        </div>
       </div>
     </Link>
   );

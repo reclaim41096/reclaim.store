@@ -7,11 +7,10 @@ import { useCart } from '@/components/CartProvider';
 import { formatNaira } from '@/lib/format';
 
 const DELIVERY_FEE = 1000;
-const FREE_DELIVERY_THRESHOLD = 15000;
 
 export default function CartPage() {
   const { items, updateQuantity, removeItem, subtotal } = useCart();
-  const delivery = subtotal >= FREE_DELIVERY_THRESHOLD || subtotal === 0 ? 0 : DELIVERY_FEE;
+  const delivery = subtotal === 0 ? 0 : DELIVERY_FEE;
   const total = subtotal + delivery;
 
   return (
@@ -91,7 +90,7 @@ export default function CartPage() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-ink-light">Delivery</span>
-                  <span>{delivery === 0 ? 'Free' : formatNaira(delivery)}</span>
+                  <span>{formatNaira(delivery)}</span>
                 </div>
               </div>
               <div className="h-px bg-brand-border" />
@@ -105,9 +104,6 @@ export default function CartPage() {
               >
                 Proceed to Checkout
               </Link>
-              <div className="text-center text-xs text-ink-faint">
-                Free delivery on orders over {formatNaira(FREE_DELIVERY_THRESHOLD)}
-              </div>
             </div>
           </div>
         )}

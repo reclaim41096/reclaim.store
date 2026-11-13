@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useCart } from './CartProvider';
+import { Logo } from './Logo';
 
 export function Header() {
   const { count } = useCart();
@@ -9,7 +10,7 @@ export function Header() {
   return (
     <header className="flex flex-wrap items-center justify-between gap-4 border-b border-brand-border px-6 py-5 md:px-12">
       <Link href="/" className="flex items-center">
-        <span className="font-wordmark text-3xl text-brand">Reclaim</span>
+        <Logo height={30} />
       </Link>
       <nav className="flex flex-wrap items-center gap-7">
         <Link href="/" className="text-sm font-medium text-ink hover:text-brand">
@@ -21,10 +22,10 @@ export function Header() {
         <Link href="/shop#beverages" className="text-sm font-medium text-ink hover:text-brand">
           Beverages
         </Link>
-        <Link href="/shop" className="text-sm font-medium text-ink hover:text-brand">
-          Wholesale
+        <Link href="/about" className="text-sm font-medium text-ink hover:text-brand">
+          About
         </Link>
-        <Link href="/#contact" className="text-sm font-medium text-ink hover:text-brand">
+        <Link href="/contact" className="text-sm font-medium text-ink hover:text-brand">
           Contact
         </Link>
       </nav>

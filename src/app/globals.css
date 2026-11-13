@@ -24,3 +24,20 @@ body {
   background: #ffffff;
   color: #221211;
 }
+
+/* Sitewide subtle "mouse effect": any clickable card/button/link lifts
+   and shadows slightly on hover, everywhere, with no extra markup needed. */
+a,
+button {
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+}
+
+a:hover,
+button:hover {
+  transform: translateY(-1px);
+}
+
+a:active,
+button:active {
+  transform: translateY(0);
+}
