@@ -5,7 +5,7 @@ export const WHATSAPP_NUMBER = (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '2347
 
 type Line = { productName: string; variantLabel: string | null; unitPrice: number; quantity: number };
 
-export function buildOrderMessage(o: {
+export type OrderData = {
   orderCode: string;
   name: string;
   phone: string;
@@ -17,13 +17,17 @@ export function buildOrderMessage(o: {
   subtotal: number;
   delivery: number;
   total: number;
-}) {
+};
+
+export type PaymentInfo = { amount: number; method: string; reference: string };
+
+export function buildOrderMessage(o: OrderData, payment?: PaymentInfo) {
   const lines = o.items.map(
     (i, n) =>
       `${n + 1}. ${i.productName}${i.variantLabel ? ` (${i.variantLabel})` : ''}\n    ${i.quantity} × ${formatNaira(i.unitPrice)} = ${formatNaira(i.unitPrice * i.quantity)}`,
   );
   return [
-    `*NEW ORDER: ${o.orderCode}*`,
+    payment ? `*PAID ORDER: ${o.orderCode}*` : `*NEW ORDER: ${o.orderCode}*`,
     'Reclaim Cleaning Products & Beverages',
     '',
     '*CUSTOMER*',
@@ -41,8 +45,37 @@ export function buildOrderMessage(o: {
     `Subtotal: ${formatNaira(o.subtotal)}`,
     `Delivery: ${formatNaira(o.delivery)}`,
     `*TOTAL: ${formatNaira(o.total)}*`,
+    ...(payment
+      ? [
+          '',
+          '*PAYMENT*',
+          'Status: PAID (Paystack)',
+          `Amount paid: ${formatNaira(payment.amount)}`,
+          `Method: ${payment.method}`,
+          `Reference: ${payment.reference}`,
+          '',
+          'Payment confirmed. Please process my order for delivery. Thank you!',
+        ]
+      : ['', 'Please confirm availability and send the payment details. Thank you!']),
+  ].join('\n');
+}
+
+/** Used when the order details are not available in this browser (e.g. paid on another device). */
+export function buildPaymentOnlyMessage(o: { orderCode: string; name?: string; phone?: string }, payment: PaymentInfo) {
+  return [
+    `*PAID ORDER: ${o.orderCode}*`,
+    'Reclaim Cleaning Products & Beverages',
     '',
-    'Please confirm availability and send the payment details. Thank you!',
+    ...(o.name ? [`Name: ${o.name}`] : []),
+    ...(o.phone ? [`Phone: ${o.phone}`] : []),
+    '',
+    '*PAYMENT*',
+    'Status: PAID (Paystack)',
+    `Amount paid: ${formatNaira(payment.amount)}`,
+    `Method: ${payment.method}`,
+    `Reference: ${payment.reference}`,
+    '',
+    'Payment confirmed. Please process my order for delivery. Thank you!',
   ].join('\n');
 }
 

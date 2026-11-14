@@ -102,6 +102,25 @@ export default function CheckoutPage() {
       return;
     }
 
+    const orderData = {
+      orderCode,
+      name: form.name.trim(),
+      phone: form.phone.trim(),
+      email: form.email.trim(),
+      address: form.address.trim(),
+      city: finalCity,
+      state: form.state,
+      items,
+      subtotal,
+      delivery,
+      total,
+    };
+    try {
+      window.sessionStorage.setItem(`reclaim-order-${orderCode}`, JSON.stringify(orderData));
+    } catch {
+      /* ignore */
+    }
+
     if (form.paymentMethod === 'whatsapp') {
       const message = buildOrderMessage({
         orderCode,
