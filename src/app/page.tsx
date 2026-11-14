@@ -35,7 +35,7 @@ export default async function HomePage() {
           Products
         </span>
         <div className="mb-7 flex flex-wrap items-baseline justify-between gap-3">
-          <h2 className="font-display text-[28px] font-bold">Shop by category</h2>
+          <h2 className="font-display text-[22px] font-semibold md:text-[28px] md:font-bold">Shop by category</h2>
           <Link href="/shop" className="text-sm font-semibold">
             View all products <LuArrowRight size={16} className="ml-1 inline-block align-[-3px]" />
           </Link>
@@ -62,7 +62,7 @@ export default async function HomePage() {
       {/* Best sellers */}
       <section className="bg-[#FCF7F6] px-6 py-16 md:px-12">
         <div className="mb-7 flex flex-wrap items-baseline justify-between gap-3">
-          <h2 className="font-display text-[28px] font-bold">Best sellers</h2>
+          <h2 className="font-display text-[22px] font-semibold md:text-[28px] md:font-bold">Best sellers</h2>
           <Link href="/shop" className="text-sm font-semibold">
             View all <LuArrowRight size={16} className="ml-1 inline-block align-[-3px]" />
           </Link>
@@ -79,7 +79,7 @@ export default async function HomePage() {
       {/* About Reclaim teaser */}
       <section className="mx-6 mb-12 flex flex-wrap items-center justify-between gap-6 rounded-3xl bg-ink p-8 md:mx-12 md:p-12">
         <div className="max-w-[560px]">
-          <h2 className="mb-2.5 font-display text-2xl font-bold text-white">About Reclaim</h2>
+          <h2 className="mb-2.5 font-display text-xl font-semibold text-white md:text-2xl md:font-bold">About Reclaim</h2>
           <p className="text-[15px] leading-relaxed text-[#B9C7BF]">
             A Lagos-based brand across two lines: cleaning products for home and business, and
             natural Tissa honey. Wholesale pricing available on bulk orders.
@@ -109,16 +109,16 @@ function CategoryCard({
   return (
     <Link
       href={href}
-      className="group flex h-full flex-col gap-3.5 rounded-2xl border border-brand-border bg-white p-6 hover:border-brand/40 hover:shadow-[0_18px_40px_-22px_rgba(227,30,36,0.45)]"
+      className="group flex h-full flex-row items-center gap-4 rounded-2xl border border-brand-border bg-white p-4 md:flex-col md:items-stretch md:gap-3.5 md:p-6 hover:border-brand/40 hover:shadow-[0_18px_40px_-22px_rgba(227,30,36,0.45)]"
     >
       <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-tint transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110">
         <CategoryIcon slug={slug} />
       </div>
-      <div className="flex-1">
-        <div className="text-[16px] font-bold">{name}</div>
-        <div className="mt-1 text-[13px] text-ink-light">{description}</div>
+      <div className="min-w-0 flex-1">
+        <div className="text-[15px] font-semibold md:text-[16px] md:font-bold">{name}</div>
+        <div className="mt-0.5 text-[12px] text-ink-light md:mt-1 md:text-[13px]">{description}</div>
       </div>
-      <LuArrowRight size={18} className="text-brand transition-transform duration-300 group-hover:translate-x-1.5" />
+      <LuArrowRight size={18} className="flex-none text-brand transition-transform duration-300 group-hover:translate-x-1.5" />
     </Link>
   );
 }

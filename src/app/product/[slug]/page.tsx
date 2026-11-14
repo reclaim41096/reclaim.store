@@ -66,7 +66,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
         <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: iconColor }}>
           {product.category.name}
         </span>
-        <h1 className="mt-1.5 font-display text-[26px] font-bold md:text-[30px]">{product.name}</h1>
+        <h1 className="mt-1.5 font-display text-[22px] font-semibold md:text-[30px] md:font-bold">{product.name}</h1>
       </div>
 
       <section className="flex flex-wrap gap-8 px-6 py-6 md:gap-12 md:px-12">
@@ -92,7 +92,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
               )}
             </div>
             <div className="flex min-w-0 flex-1 basis-full md:basis-[420px] flex-col gap-5">
-              <div className="text-2xl font-bold">{formatNaira(Number(product.base_price))}</div>
+              <div className="text-xl font-semibold md:text-2xl md:font-bold">{formatNaira(Number(product.base_price))}</div>
             </div>
           </>
         )}
@@ -112,7 +112,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
 
       {related.length > 0 && (
         <section className="bg-[#FCF7F6] px-6 py-16 md:px-12">
-          <h2 className="mb-6 font-display text-2xl font-bold">You may also like</h2>
+          <h2 className="mb-5 font-display text-xl font-semibold md:mb-6 md:text-2xl md:font-bold">You may also like</h2>
           <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
             {related.map((p: any) => (
               <Link

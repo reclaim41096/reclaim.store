@@ -19,7 +19,7 @@ export default function ContactPage() {
           <span className="mb-4 inline-flex w-fit items-center gap-1.5 rounded-full bg-brand-tint px-3.5 py-1.5 text-[13px] font-semibold text-brand-dark">
             Get Started
           </span>
-          <h1 className="max-w-xl font-display text-[38px] font-extrabold leading-[1.1] tracking-tight md:text-[46px]">
+          <h1 className="max-w-xl font-display text-[30px] font-bold leading-[1.1] tracking-tight md:text-[46px] md:font-extrabold">
             Get in touch with us.
             <br />
             We&apos;re here to assist you.
@@ -32,7 +32,7 @@ export default function ContactPage() {
         {/* Right: dark contact info panel */}
         <div className="flex min-w-0 flex-1 basis-full md:basis-[380px] flex-col justify-between gap-10 bg-ink px-6 py-12 text-white md:px-12 md:py-16 lg:py-20">
           <div>
-            <h2 className="font-display text-2xl font-bold leading-tight">
+            <h2 className="font-display text-xl font-semibold leading-tight md:text-2xl md:font-bold">
               We are always
               <br />
               happy to assist you

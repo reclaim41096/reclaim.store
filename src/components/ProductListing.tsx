@@ -38,7 +38,7 @@ export function ProductListing({
           </Link>{' '}
           / {title}
         </div>
-        <h1 className="mb-5 font-display text-[28px] font-bold md:text-[32px]">{title}</h1>
+        <h1 className="mb-5 font-display text-[22px] font-semibold md:text-[32px] md:font-bold">{title}</h1>
         <div className="flex flex-wrap gap-2.5 pb-4">
           {active === 'cleaning' ? <span className={tab(true)}>Cleaning Products</span> : <Link href="/shop" className={tab(false)}>Cleaning Products</Link>}
           {active === 'beverages' ? <span className={tab(true)}>Beverages</span> : <Link href="/beverages" className={tab(false)}>Beverages</Link>}

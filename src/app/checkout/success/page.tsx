@@ -106,7 +106,7 @@ export default async function CheckoutSuccessPage({
             <LuCheck size={32} className="text-brand" strokeWidth={3} />
           )}
         </div>
-        <h1 className="mb-2.5 font-display text-2xl font-bold">{copy[result].title}</h1>
+        <h1 className="mb-2.5 font-display text-xl font-semibold md:text-2xl md:font-bold">{copy[result].title}</h1>
         {searchParams.order && (
           <p className="mb-2 text-ink-muted">
             Order reference: <span className="font-bold text-ink">{searchParams.order}</span>

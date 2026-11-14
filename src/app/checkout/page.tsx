@@ -13,6 +13,7 @@ import { FaWhatsapp } from 'react-icons/fa6';
 import { NIGERIA_LOCATIONS, OTHER_CITY, STATES } from '@/lib/nigeria-locations';
 import { buildOrderMessage, whatsappUrl } from '@/lib/whatsapp';
 import { CheckoutSteps } from '@/components/CheckoutSteps';
+import { BackBar } from '@/components/BackBar';
 
 // Delivery is not charged on the site: cost is agreed with the customer on WhatsApp.
 const DELIVERY_FEE = 0;
@@ -169,13 +170,14 @@ export default function CheckoutPage() {
   return (
     <>
       <Header />
+      <BackBar fallback="/cart" />
 
       <CheckoutSteps current={2} />
 
       <div className="flex flex-wrap items-start gap-10 px-6 pb-16 pt-4 md:px-12">
         <div className="flex min-w-0 flex-1 basis-full md:basis-[560px] flex-col gap-7">
           <div className="rounded-2xl border border-brand-border bg-white p-6">
-            <h3 className="mb-5 text-[17px] font-bold">Contact &amp; Delivery</h3>
+            <h3 className="mb-4 text-[15px] font-semibold md:mb-5 md:text-[17px] md:font-bold">Contact &amp; Delivery</h3>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <Field label="Full name">
                 <input
@@ -252,7 +254,7 @@ export default function CheckoutPage() {
           </div>
 
           <div className="rounded-2xl border border-brand-border bg-white p-6">
-            <h3 className="mb-5 text-[17px] font-bold">Payment Method</h3>
+            <h3 className="mb-4 text-[15px] font-semibold md:mb-5 md:text-[17px] md:font-bold">Payment Method</h3>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {(
                 [
@@ -290,7 +292,7 @@ export default function CheckoutPage() {
         </div>
 
         <div className="flex w-full flex-0 basis-full md:basis-[360px] flex-col gap-4 rounded-2xl border border-brand-border bg-white p-6 md:w-[360px]">
-          <h3 className="text-lg font-bold">Order Summary</h3>
+          <h3 className="text-base font-semibold md:text-lg md:font-bold">Order Summary</h3>
           <div className="flex flex-col gap-2.5">
             {items.map((item) => (
               <div key={item.variantId} className="flex justify-between text-[13px]">

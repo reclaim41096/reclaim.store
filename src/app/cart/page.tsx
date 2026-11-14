@@ -8,6 +8,7 @@ import { formatNaira } from '@/lib/format';
 import { LuArrowLeft, LuArrowRight, LuMinus, LuPlus, LuX } from 'react-icons/lu';
 import { CheckoutSteps } from '@/components/CheckoutSteps';
 import Image from 'next/image';
+import { BackBar } from '@/components/BackBar';
 
 // Delivery is not charged on the site: cost is agreed with the customer on WhatsApp.
 const DELIVERY_FEE = 0;
@@ -20,11 +21,12 @@ export default function CartPage() {
   return (
     <>
       <Header />
+      <BackBar fallback="/shop" />
 
       <CheckoutSteps current={1} />
 
       <div className="px-6 pb-16 pt-4 md:px-12">
-        <h1 className="mb-7 font-display text-[30px] font-bold">Your Cart ({items.length})</h1>
+        <h1 className="mb-5 font-display text-[22px] font-semibold md:mb-7 md:text-[30px] md:font-bold">Your Cart ({items.length})</h1>
 
         {items.length === 0 ? (
           <div className="rounded-2xl border border-brand-border bg-white p-12 text-center">
@@ -48,7 +50,7 @@ export default function CartPage() {
                       </div>
                     )}
                     <div className="min-w-0">
-                      <div className="text-[15px] font-bold">{item.productName}</div>
+                      <div className="text-[14px] font-semibold sm:text-[15px] sm:font-bold">{item.productName}</div>
                       {item.variantLabel && (
                         <div className="mt-1 text-[13px] text-ink-light">{item.variantLabel}</div>
                       )}
@@ -71,7 +73,7 @@ export default function CartPage() {
                       <LuPlus size={14} className="mx-auto" />
                     </button>
                   </div>
-                  <div className="ml-auto w-24 text-right font-bold sm:ml-0 sm:w-20">
+                  <div className="ml-auto w-24 text-right text-[15px] font-semibold sm:ml-0 sm:w-20 sm:text-base sm:font-bold">
                     {formatNaira(item.unitPrice * item.quantity)}
                   </div>
                   <button
@@ -89,7 +91,7 @@ export default function CartPage() {
             </div>
 
             <div className="flex-0 flex w-full basis-full md:basis-[360px] flex-col gap-4 rounded-2xl border border-brand-border bg-white p-6 md:w-[360px]">
-              <h3 className="text-lg font-bold">Order Summary</h3>
+              <h3 className="text-base font-semibold md:text-lg md:font-bold">Order Summary</h3>
               <div className="flex flex-col gap-2.5 text-sm">
                 <div className="flex justify-between">
                   <span className="text-ink-light">Subtotal</span>

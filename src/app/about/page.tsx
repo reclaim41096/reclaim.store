@@ -32,14 +32,14 @@ export default function AboutPage() {
           <br />
           Better environments.
         </h1>
-        <p className="mt-6 max-w-2xl text-[17px] leading-relaxed text-ink-muted">
+        <p className="mt-6 max-w-2xl text-[15px] leading-relaxed text-ink-muted md:text-[17px]">
           Looking for reliable and affordable cleaning solutions for your home, office or
           business? RECLAIM is here to make your cleaning routine easier!
         </p>
       </section>
 
       <section className="px-6 py-16 md:px-12">
-        <h2 className="mb-7 font-display text-2xl font-bold">Our product range includes</h2>
+        <h2 className="mb-5 font-display text-xl font-semibold md:mb-7 md:text-2xl md:font-bold">Our product range includes</h2>
         <div className="grid grid-cols-1 gap-5 min-[480px]:grid-cols-2 lg:grid-cols-3">
           {PRODUCT_LINES.map((c, i) => (
             <Reveal key={c.slug} delay={i * 60}>
@@ -51,18 +51,18 @@ export default function AboutPage() {
           </Reveal>
         </div>
 
-        <p className="mt-10 max-w-2xl text-[17px] leading-relaxed text-ink-muted">
+        <p className="mt-10 max-w-2xl text-[15px] leading-relaxed text-ink-muted md:text-[17px]">
           Whether you are buying for personal use, your business or wholesale distribution,
           RECLAIM has cleaning solutions to meet your everyday needs.
         </p>
-        <p className="mt-4 max-w-2xl font-display text-xl font-bold text-ink">
+        <p className="mt-4 max-w-2xl font-display text-base font-semibold text-ink md:text-xl md:font-bold">
           RECLAIM — Your Trusted Partner in Cleanliness and Freshness!
         </p>
       </section>
 
       <section className="mx-6 mb-10 flex flex-wrap items-center justify-between gap-6 rounded-3xl bg-ink p-8 md:mx-12 md:p-12">
         <div className="max-w-[560px]">
-          <h2 className="mb-2.5 flex items-center gap-3 font-display text-2xl font-bold text-white">
+          <h2 className="mb-2.5 flex items-center gap-3 font-display text-xl font-semibold text-white md:text-2xl md:font-bold">
             <LuPhoneCall size={24} className="flex-none text-brand" /> Contact us today
           </h2>
           <p className="text-[15px] leading-relaxed text-[#B9C7BF]">
