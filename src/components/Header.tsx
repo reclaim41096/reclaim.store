@@ -1,62 +1,91 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
+import { LuMenu, LuShoppingCart, LuX } from 'react-icons/lu';
 import { useCart } from './CartProvider';
 import { Logo } from './Logo';
 
+const NAV = [
+  { href: '/', label: 'Home' },
+  { href: '/shop', label: 'Products' },
+  { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
+];
+
 export function Header() {
   const { count } = useCart();
+  const [open, setOpen] = useState(false);
 
   return (
-    <header className="relative flex flex-wrap items-center justify-between gap-4 border-b border-brand-border px-6 py-5 md:px-12">
-      <nav className="flex flex-wrap items-center gap-7 order-2 md:order-1">
-        <Link href="/" className="text-sm font-medium text-ink hover:text-brand">
-          Home
-        </Link>
-        <Link href="/shop" className="text-sm font-medium text-ink hover:text-brand">
-          Products
-        </Link>
-        <Link href="/about" className="text-sm font-medium text-ink hover:text-brand">
-          About
-        </Link>
-        <Link href="/contact" className="text-sm font-medium text-ink hover:text-brand">
-          Contact
-        </Link>
-      </nav>
+    <header className="relative border-b border-brand-border px-5 py-4 md:px-12 md:py-5">
+      <div className="flex items-center justify-between gap-4">
+        {/* Desktop nav */}
+        <nav className="hidden items-center gap-7 md:flex">
+          {NAV.map((l) => (
+            <Link key={l.href} href={l.href} className="text-sm font-medium text-ink hover:text-brand">
+              {l.label}
+            </Link>
+          ))}
+        </nav>
 
-      <Link
-        href="/"
-        className="logo-link order-1 flex items-center md:absolute md:left-1/2 md:top-1/2 md:order-none md:-translate-x-1/2 md:-translate-y-1/2"
-      >
-        <Logo height={46} />
-      </Link>
-
-      <div className="order-3 flex items-center gap-4">
-        <Link href="/cart" aria-label="Cart" className="relative flex p-1.5">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L21 8H6"
-              stroke="#221211"
-              strokeWidth="1.8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <circle cx="10" cy="21" r="1.4" fill="#221211" />
-            <circle cx="18" cy="21" r="1.4" fill="#221211" />
-          </svg>
-          {count > 0 && (
-            <span className="absolute -right-1.5 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-brand text-[10px] font-bold text-white">
-              {count}
-            </span>
-          )}
-        </Link>
         <Link
-          href="/shop"
-          className="rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-dark"
+          href="/"
+          className="logo-link flex items-center md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2"
+          onClick={() => setOpen(false)}
         >
-          Shop Now
+          <Logo height={40} />
         </Link>
+
+        <div className="flex items-center gap-2 sm:gap-4">
+          <Link href="/cart" aria-label="Cart" className="relative flex p-2">
+            <LuShoppingCart size={22} className="text-ink" />
+            {count > 0 && (
+              <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-brand text-[10px] font-bold text-white">
+                {count}
+              </span>
+            )}
+          </Link>
+          <Link
+            href="/shop"
+            className="hidden rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-dark sm:block"
+          >
+            Shop Now
+          </Link>
+          <button
+            type="button"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            onClick={() => setOpen((o) => !o)}
+            className="flex p-2 md:hidden"
+          >
+            {open ? <LuX size={24} /> : <LuMenu size={24} />}
+          </button>
+        </div>
       </div>
+
+      {/* Mobile menu */}
+      {open && (
+        <nav className="absolute inset-x-0 top-full z-40 flex flex-col border-b border-brand-border bg-white px-5 pb-5 pt-2 shadow-lg md:hidden">
+          {NAV.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              onClick={() => setOpen(false)}
+              className="border-b border-brand-border/60 py-3.5 text-[15px] font-semibold text-ink"
+            >
+              {l.label}
+            </Link>
+          ))}
+          <Link
+            href="/shop"
+            onClick={() => setOpen(false)}
+            className="mt-4 rounded-full bg-brand py-3 text-center text-[15px] font-semibold text-white"
+          >
+            Shop Now
+          </Link>
+        </nav>
+      )}
     </header>
   );
 }

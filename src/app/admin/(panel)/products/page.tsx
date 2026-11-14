@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 import { formatNaira } from '@/lib/format';
 import { DeleteProductButton } from '@/components/admin/DeleteProductButton';
+import { LuPencil, LuPlus } from 'react-icons/lu';
 
 export const dynamic = 'force-dynamic';
 
@@ -28,12 +29,12 @@ export default async function AdminProductsPage() {
           href="/admin/products/new"
           className="flex items-center gap-2 rounded-lg bg-brand px-5 py-3 text-sm font-semibold text-white hover:bg-brand-dark"
         >
-          + Add Product
+          <LuPlus size={18} /> Add Product
         </Link>
       </div>
 
-      <div className="overflow-hidden rounded-2xl border border-brand-border bg-white">
-        <table className="w-full border-collapse">
+      <div className="overflow-x-auto rounded-2xl border border-brand-border bg-white">
+        <table className="w-full min-w-[720px] border-collapse">
           <thead>
             <tr className="text-left text-xs font-semibold uppercase tracking-wide text-ink-faint">
               <th className="px-4 py-3">Product</th>
@@ -58,7 +59,7 @@ export default async function AdminProductsPage() {
 
               return (
                 <tr key={p.id} className="border-t border-[#EEF2F0] text-sm">
-                  <td className="px-4 py-3.5 font-semibold">{p.name}</td>
+                  <td className="whitespace-nowrap px-4 py-3.5 font-semibold">{p.name}</td>
                   <td className="px-4 py-3.5 text-ink-light">
                     {p.category?.section?.name} / {p.category?.name}
                   </td>
@@ -77,7 +78,7 @@ export default async function AdminProductsPage() {
                         className="rounded-lg p-1.5 text-ink-light hover:bg-[#FBE8E6]"
                         aria-label="Edit"
                       >
-                        ✏️
+                        <LuPencil size={18} />
                       </Link>
                       <DeleteProductButton productId={p.id} />
                     </div>

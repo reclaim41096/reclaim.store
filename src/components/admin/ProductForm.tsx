@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
+import { LuPlus, LuX } from 'react-icons/lu';
 
 export type Category = { id: string; name: string; sectionName: string };
 type OptionDraft = { id: string; name: string; valuesText: string };
@@ -233,7 +234,7 @@ export function ProductForm({ categories, initial }: { categories: Category[]; i
 
   return (
     <div className="flex flex-wrap items-start gap-6">
-      <div className="flex min-w-0 flex-1 basis-[640px] flex-col gap-5">
+      <div className="flex min-w-0 flex-1 basis-full md:basis-[640px] flex-col gap-5">
         <Card title="Basic Information">
           <div className="flex flex-col gap-4">
             <LabeledField label="Product name">
@@ -251,7 +252,7 @@ export function ProductForm({ categories, initial }: { categories: Category[]; i
             <LabeledField label="Description">
               <textarea rows={4} value={description} onChange={(e) => setDescription(e.target.value)} />
             </LabeledField>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <LabeledField label="Category">
                 <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
                   {categories.map((c) => (
@@ -274,23 +275,23 @@ export function ProductForm({ categories, initial }: { categories: Category[]; i
               Add an option (e.g. Fragrance, Scent, Size) and list its values, comma separated.
             </span>
             <button onClick={addOption} className="text-sm font-semibold text-brand">
-              + Add option
+              <span className="inline-flex items-center gap-1"><LuPlus size={16} /> Add option</span>
             </button>
           </div>
 
           <div className="my-4 flex flex-col gap-3">
             {options.map((opt) => (
               <div key={opt.id} className="rounded-xl border border-[#EEF2F0] p-4">
-                <div className="mb-2.5 flex items-center gap-3">
+                <div className="mb-2.5 flex flex-wrap items-center gap-3">
                   <input
                     value={opt.name}
                     onChange={(e) => updateOption(opt.id, { name: e.target.value })}
                     placeholder="Option name (e.g. Fragrance)"
-                    className="w-44 rounded-lg border border-brand-border px-3 py-2 text-sm font-semibold"
+                    className="w-full rounded-lg sm:w-44 border border-brand-border px-3 py-2 text-sm font-semibold"
                   />
-                  <span className="flex-1 text-xs text-ink-faint">Values (comma separated)</span>
+                  <span className="hidden flex-1 text-xs text-ink-faint sm:block">Values (comma separated)</span>
                   <button onClick={() => removeOption(opt.id)} className="text-ink-faint hover:text-[#C13C3C]">
-                    ✕
+                    <LuX size={18} />
                   </button>
                 </div>
                 <input
@@ -403,7 +404,7 @@ export function ProductForm({ categories, initial }: { categories: Category[]; i
 
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl border border-brand-border bg-white p-6">
+    <div className="rounded-2xl border border-brand-border bg-white p-4 sm:p-6">
       <h3 className="mb-5 text-base font-bold">{title}</h3>
       {children}
     </div>

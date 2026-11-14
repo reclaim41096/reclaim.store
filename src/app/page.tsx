@@ -5,6 +5,7 @@ import { ProductCard } from '@/components/ProductCard';
 import { CategoryIcon } from '@/components/CategoryIcon';
 import { FullHero } from '@/components/FullHero';
 import { getSectionsWithCategories, getActiveProducts } from '@/lib/queries';
+import { LuArrowRight } from 'react-icons/lu';
 
 export const revalidate = 60;
 
@@ -20,7 +21,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <div className="bg-ink py-2.5 text-center text-[13px] font-medium text-white">
+      <div className="bg-ink px-4 py-2.5 text-center text-[13px] font-medium text-white">
         Nationwide delivery • Wholesale pricing available for bulk orders
       </div>
       <Header />
@@ -35,7 +36,7 @@ export default async function HomePage() {
         <div className="mb-7 flex flex-wrap items-baseline justify-between gap-3">
           <h2 className="font-display text-[28px] font-bold">Shop by category</h2>
           <Link href="/shop" className="text-sm font-semibold">
-            View all products →
+            View all products <LuArrowRight size={16} className="ml-1 inline-block align-[-3px]" />
           </Link>
         </div>
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -78,7 +79,7 @@ export default async function HomePage() {
         <div className="mb-7 flex flex-wrap items-baseline justify-between gap-3">
           <h2 className="font-display text-[28px] font-bold">Best sellers</h2>
           <Link href="/shop" className="text-sm font-semibold">
-            View all →
+            View all <LuArrowRight size={16} className="ml-1 inline-block align-[-3px]" />
           </Link>
         </div>
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -89,7 +90,7 @@ export default async function HomePage() {
       </section>
 
       {/* About Reclaim teaser */}
-      <section className="mx-6 mb-16 flex flex-wrap items-center justify-between gap-6 rounded-3xl bg-ink p-12 md:mx-12">
+      <section className="mx-6 mb-12 flex flex-wrap items-center justify-between gap-6 rounded-3xl bg-ink p-8 md:mx-12 md:p-12">
         <div className="max-w-[560px]">
           <h2 className="mb-2.5 font-display text-2xl font-bold text-white">About Reclaim</h2>
           <p className="text-[15px] leading-relaxed text-[#B9C7BF]">

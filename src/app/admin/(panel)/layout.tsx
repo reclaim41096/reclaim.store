@@ -8,9 +8,9 @@ export default async function AdminPanelLayout({ children }: { children: React.R
   } = await supabase.auth.getUser();
 
   return (
-    <div className="flex min-h-screen bg-[#FCF5F3] font-sans text-ink">
+    <div className="flex min-h-screen flex-col bg-[#FCF5F3] md:flex-row font-sans text-ink">
       <AdminSidebar email={user?.email ?? null} />
-      <main className="min-w-0 flex-1 p-8 md:p-10">{children}</main>
+      <main className="min-w-0 flex-1 p-4 pt-[4.5rem] sm:p-6 sm:pt-[5rem] md:p-10">{children}</main>
     </div>
   );
 }

@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 import { formatNaira } from '@/lib/format';
+import type { IconType } from 'react-icons';
+import { LuArrowRight, LuBanknote, LuPackage, LuPlus, LuReceipt, LuTriangleAlert } from 'react-icons/lu';
 
 export const dynamic = 'force-dynamic';
 
@@ -37,21 +39,22 @@ export default async function AdminDashboardPage() {
           href="/admin/products/new"
           className="flex items-center gap-2 rounded-lg bg-brand px-5 py-3 text-sm font-semibold text-white hover:bg-brand-dark"
         >
-          + Add Product
+          <LuPlus size={18} /> Add Product
         </Link>
       </div>
 
-      <div className="mb-7 grid grid-cols-2 gap-5 lg:grid-cols-4">
-        <StatCard label="Total Revenue" value={formatNaira(revenue)} />
-        <StatCard label="Orders" value={String((orders ?? []).length)} />
-        <StatCard label="Products" value={String(productCount ?? 0)} />
-        <StatCard label="Low Stock Variants" value={String((lowStock ?? []).length)} warn />
+      <div className="mb-7 grid grid-cols-1 gap-4 min-[480px]:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+        <StatCard label="Total Revenue" value={formatNaira(revenue)} Icon={LuBanknote} />
+        <StatCard label="Orders" value={String((orders ?? []).length)} Icon={LuReceipt} />
+        <StatCard label="Products" value={String(productCount ?? 0)} Icon={LuPackage} />
+        <StatCard label="Low Stock Variants" value={String((lowStock ?? []).length)} Icon={LuTriangleAlert} warn />
       </div>
 
       <div className="flex flex-wrap gap-5">
-        <div className="min-w-0 flex-1 basis-[560px] rounded-2xl border border-brand-border bg-white p-6">
+        <div className="min-w-0 flex-1 basis-full rounded-2xl border border-brand-border bg-white p-4 sm:p-6 lg:basis-[560px]">
           <h3 className="mb-4 text-base font-bold">Recent Orders</h3>
-          <table className="w-full border-collapse text-sm">
+          <div className="overflow-x-auto">
+          <table className="w-full min-w-[480px] border-collapse text-sm">
             <thead>
               <tr className="text-left text-ink-faint">
                 <th className="py-2 font-semibold">Order</th>
@@ -80,9 +83,10 @@ export default async function AdminDashboardPage() {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
 
-        <div className="min-w-0 flex-1 basis-[320px] rounded-2xl border border-brand-border bg-white p-6">
+        <div className="min-w-0 flex-1 basis-full rounded-2xl border border-brand-border bg-white p-4 sm:p-6 lg:basis-[320px]">
           <h3 className="mb-4 text-base font-bold">Low Stock Alerts</h3>
           <div className="flex flex-col gap-3.5">
             {(lowStock ?? []).length === 0 && <p className="text-sm text-ink-faint">All stocked up.</p>}
@@ -99,7 +103,7 @@ export default async function AdminDashboardPage() {
             ))}
           </div>
           <Link href="/admin/products" className="mt-4 block text-center text-sm font-semibold">
-            Manage inventory →
+            Manage inventory <LuArrowRight size={16} className="ml-1 inline-block align-[-3px]" />
           </Link>
         </div>
       </div>
@@ -107,10 +111,15 @@ export default async function AdminDashboardPage() {
   );
 }
 
-function StatCard({ label, value, warn }: { label: string; value: string; warn?: boolean }) {
+function StatCard({ label, value, warn, Icon }: { label: string; value: string; warn?: boolean; Icon: IconType }) {
   return (
     <div className="rounded-2xl border border-brand-border bg-white p-5">
-      <div className="text-[13px] font-semibold text-ink-faint">{label}</div>
+      <div className="flex items-center justify-between">
+        <div className="text-[13px] font-semibold text-ink-faint">{label}</div>
+        <span className={`flex h-9 w-9 items-center justify-center rounded-lg ${warn && value !== '0' ? 'bg-[#FDE4E4] text-[#C13C3C]' : 'bg-brand-tint text-brand'}`}>
+          <Icon size={18} />
+        </span>
+      </div>
       <div className={`mt-2 text-[26px] font-bold ${warn && value !== '0' ? 'text-[#C13C3C]' : ''}`}>{value}</div>
     </div>
   );

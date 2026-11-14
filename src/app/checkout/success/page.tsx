@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { LuCheck } from 'react-icons/lu';
 
 export default function CheckoutSuccessPage({
   searchParams,
@@ -10,7 +11,7 @@ export default function CheckoutSuccessPage({
   return (
     <>
       <Header />
-      <div className="flex justify-center gap-7 px-6 pb-2 pt-7 text-[13px] font-semibold md:px-12">
+      <div className="flex flex-wrap justify-center gap-x-5 gap-y-1 px-6 pb-2 pt-7 text-[13px] font-semibold md:px-12">
         <span className="text-ink-faint">1. Cart</span>
         <span className="text-ink-faint">—</span>
         <span className="text-ink-faint">2. Checkout</span>
@@ -20,9 +21,7 @@ export default function CheckoutSuccessPage({
 
       <div className="mx-auto max-w-lg px-6 py-20 text-center">
         <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-brand-tint">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-            <path d="m5 13 5 5L20 7" stroke="#E31E24" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <LuCheck size={32} className="text-brand" strokeWidth={3} />
         </div>
         <h1 className="mb-2.5 font-display text-2xl font-bold">Order placed!</h1>
         {searchParams.order && (

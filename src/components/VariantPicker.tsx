@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { formatNaira } from '@/lib/format';
 import { useCart } from './CartProvider';
 import { CategoryIcon } from './CategoryIcon';
+import { LuArrowRight, LuCheck, LuMinus, LuPlus } from 'react-icons/lu';
 
 type OptionValue = { id: string; value: string };
 type Option = { id: string; name: string; values: OptionValue[] };
@@ -69,7 +70,7 @@ export function VariantPicker({
 
   return (
     <>
-      <div className="flex min-w-0 flex-1 basis-[440px] flex-col gap-3">
+      <div className="flex min-w-0 flex-1 basis-full md:basis-[440px] flex-col gap-3">
         <div className={`relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl border border-brand-border ${tintClass}`}>
           {displayImage ? (
             <Image src={displayImage} alt={productName} fill sizes="(min-width: 768px) 440px, 90vw" className="object-contain p-6" />
@@ -94,7 +95,7 @@ export function VariantPicker({
         )}
       </div>
 
-      <div className="flex min-w-0 flex-1 basis-[420px] flex-col gap-5">
+      <div className="flex min-w-0 flex-1 basis-full md:basis-[420px] flex-col gap-5">
         {!selectedVariant ? null : (
           <>
             {options.map((opt) => (
@@ -145,7 +146,7 @@ export function VariantPicker({
                   className="h-10 w-10 text-lg"
                   aria-label="Decrease quantity"
                 >
-                  –
+                  <LuMinus size={16} className="mx-auto" />
                 </button>
                 <span className="w-9 text-center font-bold">{qty}</span>
                 <button
@@ -153,7 +154,7 @@ export function VariantPicker({
                   className="h-10 w-10 text-lg"
                   aria-label="Increase quantity"
                 >
-                  +
+                  <LuPlus size={16} className="mx-auto" />
                 </button>
               </div>
               <button
@@ -164,7 +165,7 @@ export function VariantPicker({
                 {selectedVariant.stock <= 0
                   ? 'Out of stock'
                   : added
-                    ? 'Added ✓'
+                    ? <span className="inline-flex items-center justify-center gap-2"><LuCheck size={18} /> Added</span>
                     : `Add to Cart — ${formatNaira(selectedVariant.price * qty)}`}
               </button>
             </div>
@@ -177,7 +178,7 @@ export function VariantPicker({
                 }}
                 className="text-center text-[13px] font-semibold text-brand"
               >
-                Buy now →
+                Buy now <LuArrowRight size={14} className="ml-1 inline-block align-[-2px]" />
               </button>
             )}
           </>

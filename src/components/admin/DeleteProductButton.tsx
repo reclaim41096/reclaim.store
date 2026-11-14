@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
+import { LuTrash2 } from 'react-icons/lu';
 
 export function DeleteProductButton({ productId }: { productId: string }) {
   const router = useRouter();
@@ -24,7 +25,7 @@ export function DeleteProductButton({ productId }: { productId: string }) {
       aria-label="Delete"
       className="rounded-lg p-1.5 text-ink-light hover:bg-[#FBE8E6] hover:text-[#C13C3C]"
     >
-      🗑
+      <LuTrash2 size={18} />
     </button>
   );
 }

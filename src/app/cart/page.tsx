@@ -5,6 +5,7 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { useCart } from '@/components/CartProvider';
 import { formatNaira } from '@/lib/format';
+import { LuArrowLeft, LuArrowRight, LuMinus, LuPlus, LuX } from 'react-icons/lu';
 
 const DELIVERY_FEE = 1000;
 
@@ -17,7 +18,7 @@ export default function CartPage() {
     <>
       <Header />
 
-      <div className="flex justify-center gap-7 px-6 pb-2 pt-7 text-[13px] font-semibold md:px-12">
+      <div className="flex flex-wrap justify-center gap-x-5 gap-y-1 px-6 pb-2 pt-7 text-[13px] font-semibold md:px-12">
         <span className="text-brand">1. Cart</span>
         <span className="text-ink-faint">—</span>
         <span className="text-ink-faint">2. Checkout</span>
@@ -32,18 +33,18 @@ export default function CartPage() {
           <div className="rounded-2xl border border-brand-border bg-white p-12 text-center">
             <p className="mb-4 text-ink-muted">Your cart is empty.</p>
             <Link href="/shop" className="font-semibold text-brand">
-              Continue shopping →
+              Continue shopping <LuArrowRight size={16} className="ml-1 inline-block align-[-3px]" />
             </Link>
           </div>
         ) : (
           <div className="flex flex-wrap items-start gap-10">
-            <div className="flex min-w-0 flex-1 basis-[560px] flex-col gap-4">
+            <div className="flex min-w-0 flex-1 basis-full md:basis-[560px] flex-col gap-4">
               {items.map((item) => (
                 <div
                   key={item.variantId}
-                  className="flex items-center gap-4 rounded-2xl border border-brand-border bg-white p-5"
+                  className="flex flex-wrap items-center gap-x-4 gap-y-3 rounded-2xl border border-brand-border bg-white p-4 sm:p-5"
                 >
-                  <div className="flex-1">
+                  <div className="min-w-0 flex-1 basis-full sm:basis-0">
                     <div className="text-[15px] font-bold">{item.productName}</div>
                     {item.variantLabel && (
                       <div className="mt-1 text-[13px] text-ink-light">{item.variantLabel}</div>
@@ -53,18 +54,20 @@ export default function CartPage() {
                     <button
                       className="h-8 w-8 text-base"
                       onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
+                      aria-label="Decrease quantity"
                     >
-                      –
+                      <LuMinus size={14} className="mx-auto" />
                     </button>
                     <span className="w-7 text-center text-sm font-bold">{item.quantity}</span>
                     <button
                       className="h-8 w-8 text-base"
                       onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
+                      aria-label="Increase quantity"
                     >
-                      +
+                      <LuPlus size={14} className="mx-auto" />
                     </button>
                   </div>
-                  <div className="w-20 text-right font-bold">
+                  <div className="ml-auto w-24 text-right font-bold sm:ml-0 sm:w-20">
                     {formatNaira(item.unitPrice * item.quantity)}
                   </div>
                   <button
@@ -72,16 +75,16 @@ export default function CartPage() {
                     className="text-ink-faint hover:text-[#C13C3C]"
                     onClick={() => removeItem(item.variantId)}
                   >
-                    ✕
+                    <LuX size={18} />
                   </button>
                 </div>
               ))}
               <Link href="/shop" className="mt-1 text-sm font-semibold">
-                ← Continue shopping
+                <LuArrowLeft size={16} className="mr-1 inline-block align-[-3px]" /> Continue shopping
               </Link>
             </div>
 
-            <div className="flex-0 flex w-full basis-[360px] flex-col gap-4 rounded-2xl border border-brand-border bg-white p-6 md:w-[360px]">
+            <div className="flex-0 flex w-full basis-full md:basis-[360px] flex-col gap-4 rounded-2xl border border-brand-border bg-white p-6 md:w-[360px]">
               <h3 className="text-lg font-bold">Order Summary</h3>
               <div className="flex flex-col gap-2.5 text-sm">
                 <div className="flex justify-between">

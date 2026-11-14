@@ -7,6 +7,7 @@ import { CategoryIcon } from '@/components/CategoryIcon';
 import { VariantPicker } from '@/components/VariantPicker';
 import { getProductBySlug, getRelatedProducts } from '@/lib/queries';
 import { formatNaira } from '@/lib/format';
+import { LuPackage, LuShieldCheck, LuTruck } from 'react-icons/lu';
 
 export const revalidate = 60;
 
@@ -65,10 +66,10 @@ export default async function ProductPage({ params }: { params: { slug: string }
         <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: iconColor }}>
           {product.category.name}
         </span>
-        <h1 className="mt-1.5 font-display text-[30px] font-bold">{product.name}</h1>
+        <h1 className="mt-1.5 font-display text-[26px] font-bold md:text-[30px]">{product.name}</h1>
       </div>
 
-      <section className="flex flex-wrap gap-12 px-6 py-6 md:px-12">
+      <section className="flex flex-wrap gap-8 px-6 py-6 md:gap-12 md:px-12">
         {variants.length > 0 ? (
           <VariantPicker
             productSlug={product.slug}
@@ -83,14 +84,14 @@ export default async function ProductPage({ params }: { params: { slug: string }
           />
         ) : (
           <>
-            <div className={`relative flex aspect-square min-w-0 flex-1 basis-[440px] items-center justify-center overflow-hidden rounded-2xl border border-brand-border ${tint}`}>
+            <div className={`relative flex aspect-square min-w-0 flex-1 basis-full md:basis-[440px] items-center justify-center overflow-hidden rounded-2xl border border-brand-border ${tint}`}>
               {product.cover_image_url ? (
                 <Image src={product.cover_image_url} alt={product.name} fill sizes="440px" className="object-contain p-6" />
               ) : (
                 <CategoryIcon slug={product.category.slug} size={140} color={iconColor} />
               )}
             </div>
-            <div className="flex min-w-0 flex-1 basis-[420px] flex-col gap-5">
+            <div className="flex min-w-0 flex-1 basis-full md:basis-[420px] flex-col gap-5">
               <div className="text-2xl font-bold">{formatNaira(Number(product.base_price))}</div>
             </div>
           </>
@@ -101,10 +102,10 @@ export default async function ProductPage({ params }: { params: { slug: string }
         <p className="max-w-2xl text-sm leading-relaxed text-ink-muted">{product.description}</p>
 
         <div className="mt-5 flex flex-wrap gap-5 rounded-2xl bg-[#FCF7F6] p-4 max-w-2xl">
-          <span className="text-[13px] text-ink-muted">🚚 Fast delivery nationwide</span>
-          <span className="text-[13px] text-ink-muted">✅ Safe, tested formula</span>
+          <span className="flex items-center gap-2 text-[13px] text-ink-muted"><LuTruck size={18} className="text-brand" /> Fast delivery nationwide</span>
+          <span className="flex items-center gap-2 text-[13px] text-ink-muted"><LuShieldCheck size={18} className="text-brand" /> Safe, tested formula</span>
           {product.wholesale_available && (
-            <span className="text-[13px] text-ink-muted">📦 Wholesale available</span>
+            <span className="flex items-center gap-2 text-[13px] text-ink-muted"><LuPackage size={18} className="text-brand" /> Wholesale available</span>
           )}
         </div>
       </div>

@@ -8,6 +8,7 @@ import { Footer } from '@/components/Footer';
 import { useCart } from '@/components/CartProvider';
 import { createClient } from '@/lib/supabase/client';
 import { formatNaira } from '@/lib/format';
+import { LuArrowLeft } from 'react-icons/lu';
 
 const DELIVERY_FEE = 1000;
 const NIGERIAN_STATES = ['Lagos', 'Ogun', 'Oyo', 'Abuja (FCT)', 'Rivers', 'Kano', 'Other'];
@@ -97,7 +98,7 @@ export default function CheckoutPage() {
     <>
       <Header />
 
-      <div className="flex justify-center gap-7 px-6 pb-2 pt-7 text-[13px] font-semibold md:px-12">
+      <div className="flex flex-wrap justify-center gap-x-5 gap-y-1 px-6 pb-2 pt-7 text-[13px] font-semibold md:px-12">
         <Link href="/cart" className="text-ink-faint">
           1. Cart
         </Link>
@@ -108,7 +109,7 @@ export default function CheckoutPage() {
       </div>
 
       <div className="flex flex-wrap items-start gap-10 px-6 pb-16 pt-4 md:px-12">
-        <div className="flex min-w-0 flex-1 basis-[560px] flex-col gap-7">
+        <div className="flex min-w-0 flex-1 basis-full md:basis-[560px] flex-col gap-7">
           <div className="rounded-2xl border border-brand-border bg-white p-6">
             <h3 className="mb-5 text-[17px] font-bold">Contact &amp; Delivery</h3>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -194,11 +195,11 @@ export default function CheckoutPage() {
           </div>
 
           <Link href="/cart" className="text-sm font-semibold">
-            ← Back to cart
+            <LuArrowLeft size={16} className="mr-1 inline-block align-[-3px]" /> Back to cart
           </Link>
         </div>
 
-        <div className="flex w-full flex-0 basis-[360px] flex-col gap-4 rounded-2xl border border-brand-border bg-white p-6 md:w-[360px]">
+        <div className="flex w-full flex-0 basis-full md:basis-[360px] flex-col gap-4 rounded-2xl border border-brand-border bg-white p-6 md:w-[360px]">
           <h3 className="text-lg font-bold">Order Summary</h3>
           <div className="flex flex-col gap-2.5">
             {items.map((item) => (

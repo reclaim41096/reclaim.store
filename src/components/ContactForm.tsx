@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
+import { LuArrowRight } from 'react-icons/lu';
 
 export function ContactForm() {
   const [form, setForm] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
@@ -113,7 +114,7 @@ export function ContactForm() {
           className="group flex w-fit items-center gap-2.5 rounded-full bg-brand px-7 py-4 text-[15px] font-semibold text-white hover:bg-brand-dark disabled:bg-ink-faint"
         >
           {status === 'submitting' ? 'Sending…' : 'Send to Reclaim'}
-          <span className="transition-transform group-hover:translate-x-1">→</span>
+          <LuArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
         </button>
       </div>
     </form>

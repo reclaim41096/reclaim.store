@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { CategoryIcon } from '@/components/CategoryIcon';
+import { LuBadgeCheck, LuCircleCheck, LuPhoneCall } from 'react-icons/lu';
 
 export const metadata = {
   title: 'About Reclaim',
@@ -21,9 +22,9 @@ export default function AboutPage() {
     <>
       <Header />
 
-      <section className="bg-brand-tint px-6 py-16 md:px-12">
+      <section className="bg-brand-tint px-6 py-12 md:px-12 md:py-16">
         <span className="mb-4 inline-flex w-fit items-center gap-1.5 rounded-full bg-white px-3.5 py-1.5 text-[13px] font-semibold text-brand-dark">
-          🟢 Introducing Reclaim Cleaning Products
+          <LuBadgeCheck size={16} className="text-brand" /> Introducing Reclaim Cleaning Products
         </span>
         <h1 className="max-w-3xl font-shout text-[28px] font-extrabold uppercase leading-[1.18] tracking-tight text-ink md:text-[42px]">
           Cleaner spaces. Fresher living.
@@ -44,8 +45,8 @@ export default function AboutPage() {
               <div className="flex h-12 w-12 flex-none items-center justify-center rounded-xl bg-brand-tint">
                 <CategoryIcon slug={c.slug} />
               </div>
-              <div className="text-[15px] font-bold">
-                <span className="mr-1.5 text-brand">✅</span>
+              <div className="flex items-center gap-2 text-[15px] font-bold">
+                <LuCircleCheck size={18} className="flex-none text-brand" />
                 {c.name}
               </div>
             </div>
@@ -54,8 +55,8 @@ export default function AboutPage() {
             <div className="flex h-12 w-12 flex-none items-center justify-center rounded-xl bg-gold-tint">
               <CategoryIcon slug="honey" color="#A6760A" />
             </div>
-            <div className="text-[15px] font-bold">
-              <span className="mr-1.5 text-gold-dark">✅</span>
+            <div className="flex items-center gap-2 text-[15px] font-bold">
+              <LuCircleCheck size={18} className="flex-none text-gold-dark" />
               Tissa Organic Honey
             </div>
           </div>
@@ -70,10 +71,10 @@ export default function AboutPage() {
         </p>
       </section>
 
-      <section className="mx-6 mb-10 flex flex-wrap items-center justify-between gap-6 rounded-3xl bg-ink p-12 md:mx-12">
+      <section className="mx-6 mb-10 flex flex-wrap items-center justify-between gap-6 rounded-3xl bg-ink p-8 md:mx-12 md:p-12">
         <div className="max-w-[560px]">
-          <h2 className="mb-2.5 font-display text-2xl font-bold text-white">
-            📞 Contact us today
+          <h2 className="mb-2.5 flex items-center gap-3 font-display text-2xl font-bold text-white">
+            <LuPhoneCall size={24} className="flex-none text-gold" /> Contact us today
           </h2>
           <p className="text-[15px] leading-relaxed text-[#B9C7BF]">
             For enquiries, orders and wholesale supplies — reach out and we&apos;ll be happy to
