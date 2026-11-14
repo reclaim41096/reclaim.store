@@ -6,6 +6,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         display: ['var(--font-bricolage)', 'sans-serif'],
+        nav: ['var(--font-lilita)', 'sans-serif'],
         shout: ['var(--font-unbounded)', 'sans-serif'],
         wordmark: ['var(--font-pacifico)', 'cursive'],
         sans: ['var(--font-inter)', 'sans-serif'],

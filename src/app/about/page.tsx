@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { CategoryIcon } from '@/components/CategoryIcon';
+import { Reveal } from '@/components/Reveal';
 import { LuBadgeCheck, LuCircleCheck, LuPhoneCall } from 'react-icons/lu';
 
 export const metadata = {
@@ -39,27 +40,15 @@ export default function AboutPage() {
 
       <section className="px-6 py-16 md:px-12">
         <h2 className="mb-7 font-display text-2xl font-bold">Our product range includes</h2>
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {PRODUCT_LINES.map((c) => (
-            <div key={c.slug} className="flex items-center gap-4 rounded-2xl border border-brand-border bg-white p-5">
-              <div className="flex h-12 w-12 flex-none items-center justify-center rounded-xl bg-brand-tint">
-                <CategoryIcon slug={c.slug} />
-              </div>
-              <div className="flex items-center gap-2 text-[15px] font-bold">
-                <LuCircleCheck size={18} className="flex-none text-brand" />
-                {c.name}
-              </div>
-            </div>
+        <div className="grid grid-cols-1 gap-5 min-[480px]:grid-cols-2 lg:grid-cols-3">
+          {PRODUCT_LINES.map((c, i) => (
+            <Reveal key={c.slug} delay={i * 60}>
+              <LineCard slug={c.slug} name={c.name} />
+            </Reveal>
           ))}
-          <div className="flex items-center gap-4 rounded-2xl border border-[#F3E6C2] bg-[#FFF9EC] p-5">
-            <div className="flex h-12 w-12 flex-none items-center justify-center rounded-xl bg-gold-tint">
-              <CategoryIcon slug="honey" color="#A6760A" />
-            </div>
-            <div className="flex items-center gap-2 text-[15px] font-bold">
-              <LuCircleCheck size={18} className="flex-none text-gold-dark" />
-              Tissa Organic Honey
-            </div>
-          </div>
+          <Reveal delay={PRODUCT_LINES.length * 60}>
+            <LineCard slug="honey" name="Tissa Organic Honey" />
+          </Reveal>
         </div>
 
         <p className="mt-10 max-w-2xl text-[17px] leading-relaxed text-ink-muted">
@@ -74,7 +63,7 @@ export default function AboutPage() {
       <section className="mx-6 mb-10 flex flex-wrap items-center justify-between gap-6 rounded-3xl bg-ink p-8 md:mx-12 md:p-12">
         <div className="max-w-[560px]">
           <h2 className="mb-2.5 flex items-center gap-3 font-display text-2xl font-bold text-white">
-            <LuPhoneCall size={24} className="flex-none text-gold" /> Contact us today
+            <LuPhoneCall size={24} className="flex-none text-brand" /> Contact us today
           </h2>
           <p className="text-[15px] leading-relaxed text-[#B9C7BF]">
             For enquiries, orders and wholesale supplies — reach out and we&apos;ll be happy to
@@ -94,5 +83,19 @@ export default function AboutPage() {
 
       <Footer />
     </>
+  );
+}
+
+function LineCard({ slug, name }: { slug: string; name: string }) {
+  return (
+    <div className="group flex h-full items-center gap-4 rounded-2xl border border-brand-border bg-white p-5 hover:border-brand/40 hover:shadow-[0_18px_40px_-22px_rgba(227,30,36,0.45)]">
+      <div className="flex h-12 w-12 flex-none items-center justify-center rounded-xl bg-brand-tint transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110">
+        <CategoryIcon slug={slug} />
+      </div>
+      <div className="flex items-center gap-2 text-[15px] font-bold">
+        <LuCircleCheck size={18} className="flex-none text-brand" />
+        {name}
+      </div>
+    </div>
   );
 }

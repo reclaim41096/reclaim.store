@@ -58,7 +58,7 @@ export function AdminSidebar({ email }: { email: string | null }) {
             <Link
               key={href}
               href={href}
-              className={`flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-semibold ${
+              className={`flex items-center gap-3 rounded-lg px-4 py-2.5 font-nav text-[15px] tracking-wide ${
                 active ? 'bg-ink text-white' : 'text-[#4E5B55] hover:bg-[#FBE8E6] hover:text-ink'
               }`}
             >

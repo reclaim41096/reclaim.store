@@ -4,6 +4,7 @@ import { Footer } from '@/components/Footer';
 import { ProductCard } from '@/components/ProductCard';
 import { CategoryIcon } from '@/components/CategoryIcon';
 import { FullHero } from '@/components/FullHero';
+import { Reveal } from '@/components/Reveal';
 import { getSectionsWithCategories, getActiveProducts } from '@/lib/queries';
 import { LuArrowRight } from 'react-icons/lu';
 
@@ -39,37 +40,21 @@ export default async function HomePage() {
             View all products <LuArrowRight size={16} className="ml-1 inline-block align-[-3px]" />
           </Link>
         </div>
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {cleaningCategories.map((c) => (
-            <Link
-              key={c.id}
-              href="/shop"
-              className="flex flex-col gap-3.5 rounded-2xl border border-brand-border bg-white p-6"
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-tint">
-                <CategoryIcon slug={c.slug} />
-              </div>
-              <div>
-                <div className="text-[16px] font-bold">{c.name}</div>
-                <div className="mt-1 text-[13px] text-ink-light">{c.description}</div>
-              </div>
-            </Link>
+        <div className="grid grid-cols-1 gap-5 min-[480px]:grid-cols-2 lg:grid-cols-3">
+          {cleaningCategories.map((c, i) => (
+            <Reveal key={c.id} delay={i * 70}>
+              <CategoryCard href="/shop" slug={c.slug} name={c.name} description={c.description} />
+            </Reveal>
           ))}
           {honey && (
-            <Link
-              href="/beverages"
-              className="flex flex-col gap-3.5 rounded-2xl border border-[#F3E6C2] bg-[#FFF9EC] p-6"
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gold-tint">
-                <CategoryIcon slug="honey" color="#A6760A" />
-              </div>
-              <div>
-                <div className="text-[16px] font-bold">Beverages</div>
-                <div className="mt-1 text-[13px] text-ink-light">
-                  Natural Tissa honey, from our beverages line
-                </div>
-              </div>
-            </Link>
+            <Reveal delay={cleaningCategories.length * 70}>
+              <CategoryCard
+                href="/beverages"
+                slug="honey"
+                name="Beverages"
+                description="Natural Tissa honey, from our beverages line"
+              />
+            </Reveal>
           )}
         </div>
       </section>
@@ -82,9 +67,11 @@ export default async function HomePage() {
             View all <LuArrowRight size={16} className="ml-1 inline-block align-[-3px]" />
           </Link>
         </div>
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {bestSellers.map((p) => (
-            <ProductCard key={p.id} product={p} />
+        <div className="grid grid-cols-1 gap-5 min-[480px]:grid-cols-2 lg:grid-cols-4">
+          {bestSellers.map((p, i) => (
+            <Reveal key={p.id} delay={i * 80}>
+              <ProductCard product={p} />
+            </Reveal>
           ))}
         </div>
       </section>
@@ -105,5 +92,33 @@ export default async function HomePage() {
 
       <Footer />
     </>
+  );
+}
+
+function CategoryCard({
+  href,
+  slug,
+  name,
+  description,
+}: {
+  href: string;
+  slug: string;
+  name: string;
+  description: string | null;
+}) {
+  return (
+    <Link
+      href={href}
+      className="group flex h-full flex-col gap-3.5 rounded-2xl border border-brand-border bg-white p-6 hover:border-brand/40 hover:shadow-[0_18px_40px_-22px_rgba(227,30,36,0.45)]"
+    >
+      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-tint transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110">
+        <CategoryIcon slug={slug} />
+      </div>
+      <div className="flex-1">
+        <div className="text-[16px] font-bold">{name}</div>
+        <div className="mt-1 text-[13px] text-ink-light">{description}</div>
+      </div>
+      <LuArrowRight size={18} className="text-brand transition-transform duration-300 group-hover:translate-x-1.5" />
+    </Link>
   );
 }

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { LuCheck } from 'react-icons/lu';
+import { CheckoutSteps } from '@/components/CheckoutSteps';
 
 export default function CheckoutSuccessPage({
   searchParams,
@@ -11,13 +12,7 @@ export default function CheckoutSuccessPage({
   return (
     <>
       <Header />
-      <div className="flex flex-wrap justify-center gap-x-5 gap-y-1 px-6 pb-2 pt-7 text-[13px] font-semibold md:px-12">
-        <span className="text-ink-faint">1. Cart</span>
-        <span className="text-ink-faint">—</span>
-        <span className="text-ink-faint">2. Checkout</span>
-        <span className="text-ink-faint">—</span>
-        <span className="text-brand">3. Confirmation</span>
-      </div>
+      <CheckoutSteps current={3} />
 
       <div className="mx-auto max-w-lg px-6 py-20 text-center">
         <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-brand-tint">

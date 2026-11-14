@@ -44,8 +44,8 @@ export default async function ProductPage({ params }: { params: { slug: string }
 
   const related = await getRelatedProducts(product.category.slug, product.slug, 4);
   const isBeverage = product.category.section.slug === 'beverages';
-  const iconColor = isBeverage ? '#A6760A' : '#E31E24';
-  const tint = isBeverage ? 'bg-gold-tint' : 'bg-brand-tint';
+  const iconColor = '#E31E24';
+  const tint = 'bg-brand-tint';
   const shopHref = isBeverage ? '/beverages' : '/shop';
 
   return (
@@ -118,11 +118,11 @@ export default async function ProductPage({ params }: { params: { slug: string }
               <Link
                 key={p.id}
                 href={`/product/${p.slug}`}
-                className="overflow-hidden rounded-2xl border border-brand-border bg-white"
+                className="group overflow-hidden rounded-2xl border border-brand-border bg-white hover:border-brand/40 hover:shadow-[0_18px_40px_-22px_rgba(227,30,36,0.45)]"
               >
-                <div className="relative flex aspect-square items-center justify-center bg-brand-tint">
+                <div className="relative flex aspect-square items-center justify-center overflow-hidden bg-brand-tint">
                   {p.cover_image_url ? (
-                    <Image src={p.cover_image_url} alt={p.name} fill sizes="200px" className="object-contain p-3" />
+                    <Image src={p.cover_image_url} alt={p.name} fill sizes="200px" className="object-contain p-3 transition-transform duration-500 group-hover:scale-110" />
                   ) : (
                     <CategoryIcon slug={product.category.slug} size={52} />
                   )}

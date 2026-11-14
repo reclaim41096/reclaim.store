@@ -1,9 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { LuMenu, LuShoppingCart, LuX } from 'react-icons/lu';
+import { usePathname } from 'next/navigation';
+import { LuMenu, LuX } from 'react-icons/lu';
 import { useCart } from './CartProvider';
+import { CartIcon } from './CartIcon';
 import { Logo } from './Logo';
 
 const NAV = [
@@ -13,42 +15,89 @@ const NAV = [
   { href: '/contact', label: 'Contact' },
 ];
 
+function isActive(pathname: string, href: string) {
+  if (href === '/') return pathname === '/';
+  if (href === '/shop') return pathname.startsWith('/shop') || pathname.startsWith('/beverages') || pathname.startsWith('/product');
+  return pathname.startsWith(href);
+}
+
 export function Header() {
   const { count } = useCart();
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [popKey, setPopKey] = useState(0);
+  const prevCount = useRef(count);
+
+  useEffect(() => setOpen(false), [pathname]);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Re-trigger the badge pop whenever the count changes
+  useEffect(() => {
+    if (prevCount.current !== count) setPopKey((k) => k + 1);
+    prevCount.current = count;
+  }, [count]);
 
   return (
-    <header className="relative border-b border-brand-border px-5 py-4 md:px-12 md:py-5">
+    <header
+      className={`sticky top-0 z-40 border-b px-5 py-3.5 backdrop-blur-md transition-shadow duration-200 lg:px-12 lg:py-4 ${
+        scrolled ? 'border-brand-border bg-white/90 shadow-[0_6px_24px_-12px_rgba(227,30,36,0.25)]' : 'border-brand-border bg-white/80'
+      }`}
+    >
       <div className="flex items-center justify-between gap-4">
-        {/* Desktop nav */}
-        <nav className="hidden items-center gap-7 md:flex">
-          {NAV.map((l) => (
-            <Link key={l.href} href={l.href} className="text-sm font-medium text-ink hover:text-brand">
-              {l.label}
-            </Link>
-          ))}
+        {/* Desktop nav: pill container, Lilita One */}
+        <nav className="hidden items-center gap-1 rounded-full border border-brand-border bg-brand-tint/60 p-1.5 lg:flex">
+          {NAV.map((l) => {
+            const active = isActive(pathname, l.href);
+            return (
+              <Link
+                key={l.href}
+                href={l.href}
+                className={`rounded-full px-5 py-2 font-nav text-[15px] tracking-wide ${
+                  active
+                    ? 'bg-brand text-white shadow-[0_4px_12px_-4px_rgba(227,30,36,0.6)]'
+                    : 'text-ink hover:bg-white hover:text-brand'
+                }`}
+              >
+                {l.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <Link
           href="/"
-          className="logo-link flex items-center md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2"
+          className="logo-link flex items-center lg:absolute lg:left-1/2 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2"
           onClick={() => setOpen(false)}
         >
           <Logo height={40} />
         </Link>
 
-        <div className="flex items-center gap-2 sm:gap-4">
-          <Link href="/cart" aria-label="Cart" className="relative flex p-2">
-            <LuShoppingCart size={22} className="text-ink" />
+        <div className="flex items-center gap-2 sm:gap-3">
+          <Link
+            href="/cart"
+            aria-label={`Cart${count ? `, ${count} items` : ''}`}
+            className="cart-btn relative flex h-11 w-11 items-center justify-center rounded-2xl border border-brand-border bg-white text-ink hover:border-brand hover:bg-brand-tint"
+          >
+            <CartIcon />
             {count > 0 && (
-              <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-brand text-[10px] font-bold text-white">
+              <span
+                key={popKey}
+                className="badge-pop absolute -right-1.5 -top-1.5 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-brand px-1 text-[11px] font-bold text-white ring-2 ring-white"
+              >
                 {count}
               </span>
             )}
           </Link>
           <Link
             href="/shop"
-            className="hidden rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white hover:bg-brand-dark sm:block"
+            className="hidden rounded-full bg-brand px-5 py-2.5 font-nav text-[15px] tracking-wide text-white hover:bg-brand-dark sm:block"
           >
             Shop Now
           </Link>
@@ -57,30 +106,35 @@ export function Header() {
             aria-label={open ? 'Close menu' : 'Open menu'}
             aria-expanded={open}
             onClick={() => setOpen((o) => !o)}
-            className="flex p-2 md:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-2xl border border-brand-border bg-white lg:hidden"
           >
-            {open ? <LuX size={24} /> : <LuMenu size={24} />}
+            {open ? <LuX size={22} /> : <LuMenu size={22} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile / tablet menu */}
       {open && (
-        <nav className="absolute inset-x-0 top-full z-40 flex flex-col border-b border-brand-border bg-white px-5 pb-5 pt-2 shadow-lg md:hidden">
-          {NAV.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              onClick={() => setOpen(false)}
-              className="border-b border-brand-border/60 py-3.5 text-[15px] font-semibold text-ink"
-            >
-              {l.label}
-            </Link>
-          ))}
+        <nav className="absolute inset-x-0 top-full z-40 border-b border-brand-border bg-white px-5 pb-5 pt-3 shadow-lg lg:hidden">
+          <div className="flex flex-col gap-1.5 rounded-3xl border border-brand-border bg-brand-tint/60 p-2">
+            {NAV.map((l) => {
+              const active = isActive(pathname, l.href);
+              return (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  className={`rounded-2xl px-5 py-3 font-nav text-[17px] tracking-wide ${
+                    active ? 'bg-brand text-white' : 'text-ink hover:bg-white'
+                  }`}
+                >
+                  {l.label}
+                </Link>
+              );
+            })}
+          </div>
           <Link
             href="/shop"
-            onClick={() => setOpen(false)}
-            className="mt-4 rounded-full bg-brand py-3 text-center text-[15px] font-semibold text-white"
+            className="mt-3 block rounded-full bg-brand py-3 text-center font-nav text-[17px] tracking-wide text-white"
           >
             Shop Now
           </Link>

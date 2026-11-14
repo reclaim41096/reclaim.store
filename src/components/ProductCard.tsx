@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { formatNaira } from '@/lib/format';
 import { CategoryIcon } from './CategoryIcon';
 import type { ProductSummary } from '@/lib/queries';
+import { LuArrowUpRight } from 'react-icons/lu';
 
 export function ProductCard({ product }: { product: ProductSummary }) {
   const price = product.price_range
@@ -12,15 +13,13 @@ export function ProductCard({ product }: { product: ProductSummary }) {
     : formatNaira(product.base_price);
   const unitLabel = product.price_unit ? `Price per ${product.price_unit}` : '';
 
-  const tint = product.category.section.slug === 'beverages' ? 'bg-gold-tint' : 'bg-brand-tint';
-  const iconColor = product.category.section.slug === 'beverages' ? '#A6760A' : '#E31E24';
 
   return (
     <Link
       href={`/product/${product.slug}`}
-      className="flex flex-col overflow-hidden rounded-2xl border border-brand-border bg-white transition hover:shadow-md"
+      className="group flex h-full flex-col overflow-hidden rounded-2xl border border-brand-border bg-white hover:border-brand/40 hover:shadow-[0_18px_40px_-22px_rgba(227,30,36,0.45)]"
     >
-      <div className={`relative flex aspect-square items-center justify-center ${tint}`}>
+      <div className="relative flex aspect-square items-center justify-center overflow-hidden bg-brand-tint">
         {product.status === 'out_of_stock' && (
           <span className="absolute left-2.5 top-2.5 rounded-full bg-[#FDE4E4] px-2.5 py-1 text-[11px] font-bold text-[#C13C3C]">
             Out of stock
@@ -37,14 +36,17 @@ export function ProductCard({ product }: { product: ProductSummary }) {
             alt={product.name}
             fill
             sizes="(min-width: 1024px) 25vw, 50vw"
-            className="object-contain p-4"
+            className="object-contain p-4 transition-transform duration-500 group-hover:scale-110"
           />
         ) : (
-          <CategoryIcon slug={product.category.slug} size={56} color={iconColor} />
+          <CategoryIcon slug={product.category.slug} size={56} />
         )}
+        <span className="absolute bottom-2.5 right-2.5 flex h-9 w-9 translate-y-2 items-center justify-center rounded-full bg-brand text-white opacity-0 shadow-lg transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+          <LuArrowUpRight size={18} />
+        </span>
       </div>
       <div className="flex flex-col gap-1.5 p-4">
-        <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: iconColor }}>
+        <span className="text-xs font-semibold uppercase tracking-wide text-brand">
           {product.category.name}
         </span>
         <div className="text-[15px] font-bold">{product.name}</div>

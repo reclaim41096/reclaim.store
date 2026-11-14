@@ -6,6 +6,7 @@ import { Footer } from '@/components/Footer';
 import { useCart } from '@/components/CartProvider';
 import { formatNaira } from '@/lib/format';
 import { LuArrowLeft, LuArrowRight, LuMinus, LuPlus, LuX } from 'react-icons/lu';
+import { CheckoutSteps } from '@/components/CheckoutSteps';
 
 const DELIVERY_FEE = 1000;
 
@@ -18,13 +19,7 @@ export default function CartPage() {
     <>
       <Header />
 
-      <div className="flex flex-wrap justify-center gap-x-5 gap-y-1 px-6 pb-2 pt-7 text-[13px] font-semibold md:px-12">
-        <span className="text-brand">1. Cart</span>
-        <span className="text-ink-faint">—</span>
-        <span className="text-ink-faint">2. Checkout</span>
-        <span className="text-ink-faint">—</span>
-        <span className="text-ink-faint">3. Confirmation</span>
-      </div>
+      <CheckoutSteps current={1} />
 
       <div className="px-6 pb-16 pt-4 md:px-12">
         <h1 className="mb-7 font-display text-[30px] font-bold">Your Cart ({items.length})</h1>

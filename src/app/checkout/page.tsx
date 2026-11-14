@@ -9,6 +9,7 @@ import { useCart } from '@/components/CartProvider';
 import { createClient } from '@/lib/supabase/client';
 import { formatNaira } from '@/lib/format';
 import { LuArrowLeft } from 'react-icons/lu';
+import { CheckoutSteps } from '@/components/CheckoutSteps';
 
 const DELIVERY_FEE = 1000;
 const NIGERIAN_STATES = ['Lagos', 'Ogun', 'Oyo', 'Abuja (FCT)', 'Rivers', 'Kano', 'Other'];
@@ -98,15 +99,7 @@ export default function CheckoutPage() {
     <>
       <Header />
 
-      <div className="flex flex-wrap justify-center gap-x-5 gap-y-1 px-6 pb-2 pt-7 text-[13px] font-semibold md:px-12">
-        <Link href="/cart" className="text-ink-faint">
-          1. Cart
-        </Link>
-        <span className="text-ink-faint">—</span>
-        <span className="text-brand">2. Checkout</span>
-        <span className="text-ink-faint">—</span>
-        <span className="text-ink-faint">3. Confirmation</span>
-      </div>
+      <CheckoutSteps current={2} />
 
       <div className="flex flex-wrap items-start gap-10 px-6 pb-16 pt-4 md:px-12">
         <div className="flex min-w-0 flex-1 basis-full md:basis-[560px] flex-col gap-7">
