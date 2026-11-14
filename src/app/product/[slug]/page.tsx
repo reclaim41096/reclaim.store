@@ -42,8 +42,10 @@ export default async function ProductPage({ params }: { params: { slug: string }
     .map((pi: any) => pi.url as string);
 
   const related = await getRelatedProducts(product.category.slug, product.slug, 4);
-  const iconColor = product.category.section.slug === 'beverages' ? '#A6760A' : '#E31E24';
-  const tint = product.category.section.slug === 'beverages' ? 'bg-gold-tint' : 'bg-brand-tint';
+  const isBeverage = product.category.section.slug === 'beverages';
+  const iconColor = isBeverage ? '#A6760A' : '#E31E24';
+  const tint = isBeverage ? 'bg-gold-tint' : 'bg-brand-tint';
+  const shopHref = isBeverage ? '/beverages' : '/shop';
 
   return (
     <>
@@ -53,8 +55,8 @@ export default async function ProductPage({ params }: { params: { slug: string }
           Home
         </Link>{' '}
         /{' '}
-        <Link href="/shop" className="text-ink-faint">
-          Shop
+        <Link href={shopHref} className="text-ink-faint">
+          {isBeverage ? 'Beverages' : 'Shop'}
         </Link>{' '}
         / {product.name}
       </div>

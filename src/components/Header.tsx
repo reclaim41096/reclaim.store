@@ -26,7 +26,7 @@ export function Header() {
 
       <Link
         href="/"
-        className="order-1 flex items-center md:absolute md:left-1/2 md:top-1/2 md:order-none md:-translate-x-1/2 md:-translate-y-1/2"
+        className="logo-link order-1 flex items-center md:absolute md:left-1/2 md:top-1/2 md:order-none md:-translate-x-1/2 md:-translate-y-1/2"
       >
         <Logo height={46} />
       </Link>

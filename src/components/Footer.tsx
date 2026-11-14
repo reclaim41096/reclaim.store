@@ -20,7 +20,7 @@ export function Footer() {
             <Link href="/shop">Air Freshener</Link>
             <Link href="/shop">Glass Cleaner</Link>
             <Link href="/shop">Multipurpose Cleaner</Link>
-            <Link href="/shop#beverages">Honey</Link>
+            <Link href="/beverages">Honey</Link>
           </div>
         </div>
         <div>

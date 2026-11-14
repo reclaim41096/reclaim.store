@@ -61,7 +61,7 @@ export default async function HomePage() {
           ))}
           {honey && (
             <Link
-              href="/shop#beverages"
+              href="/beverages"
               className="flex flex-col gap-3.5 rounded-2xl border border-[#F3E6C2] bg-[#FFF9EC] p-6"
             >
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gold-tint">

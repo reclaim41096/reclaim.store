@@ -47,8 +47,8 @@ export function FullHero({ slides }: { slides: Slide[] }) {
           Fresher living.
         </h1>
         <p className="mt-5 max-w-[460px] text-[17px] leading-relaxed text-white/80">
-          Reliable, affordable products for your home, office or business — from hand wash to air
-          fresheners, and natural honey from our beverages line.
+          Whether you are buying for personal use, your business or wholesale distribution,
+          RECLAIM has cleaning solutions to meet your everyday needs.
         </p>
         <div className="mt-8 flex flex-wrap gap-3.5">
           <Link

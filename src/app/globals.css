@@ -12,6 +12,10 @@
 @import '@fontsource/bricolage-grotesque/600.css';
 @import '@fontsource/bricolage-grotesque/700.css';
 @import '@fontsource/bricolage-grotesque/800.css';
+@import '@fontsource/unbounded/600.css';
+@import '@fontsource/unbounded/700.css';
+@import '@fontsource/unbounded/800.css';
+@import '@fontsource/unbounded/900.css';
 
 @tailwind base;
 @tailwind components;
@@ -22,6 +26,7 @@
   --font-space-grotesk: 'Space Grotesk', sans-serif;
   --font-pacifico: 'Pacifico', cursive;
   --font-bricolage: 'Bricolage Grotesque', 'Space Grotesk', sans-serif;
+  --font-unbounded: 'Unbounded', 'Bricolage Grotesque', sans-serif;
 }
 
 html,
@@ -45,4 +50,20 @@ button:hover {
 a:active,
 button:active {
   transform: translateY(0);
+}
+
+/* The header logo link is centered with its own transform (translate(-50%,-50%));
+   the generic hover-lift above would clobber that and make it jump/shake on hover. */
+.logo-link,
+.logo-link:hover,
+.logo-link:active {
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 767px) {
+  .logo-link,
+  .logo-link:hover,
+  .logo-link:active {
+    transform: none;
+  }
 }
