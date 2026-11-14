@@ -14,7 +14,8 @@ import { NIGERIA_LOCATIONS, OTHER_CITY, STATES } from '@/lib/nigeria-locations';
 import { buildOrderMessage, whatsappUrl } from '@/lib/whatsapp';
 import { CheckoutSteps } from '@/components/CheckoutSteps';
 
-const DELIVERY_FEE = 1000;
+// Delivery is not charged on the site: cost is agreed with the customer on WhatsApp.
+const DELIVERY_FEE = 0;
 
 function generateOrderCode() {
   const suffix = Math.random().toString(36).slice(2, 7).toUpperCase();
@@ -308,7 +309,9 @@ export default function CheckoutPage() {
             </div>
             <div className="flex justify-between">
               <span className="text-ink-light">Delivery</span>
-              <span>{formatNaira(delivery)}</span>
+              <span className={delivery > 0 ? '' : 'text-[13px] text-ink-muted'}>
+                {delivery > 0 ? formatNaira(delivery) : 'Agreed on WhatsApp'}
+              </span>
             </div>
           </div>
           <div className="h-px bg-brand-border" />

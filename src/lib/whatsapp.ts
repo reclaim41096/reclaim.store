@@ -43,7 +43,7 @@ export function buildOrderMessage(o: OrderData, payment?: PaymentInfo) {
     ...lines,
     '',
     `Subtotal: ${formatNaira(o.subtotal)}`,
-    `Delivery: ${formatNaira(o.delivery)}`,
+    `Delivery: ${o.delivery > 0 ? formatNaira(o.delivery) : 'To be discussed on WhatsApp'}`,
     `*TOTAL: ${formatNaira(o.total)}*`,
     ...(payment
       ? [
