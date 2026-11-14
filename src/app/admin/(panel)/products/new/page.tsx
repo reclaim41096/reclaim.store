@@ -25,7 +25,7 @@ export default async function NewProductPage() {
         </Link>{' '}
         / Add Product
       </div>
-      <h1 className="mb-6 font-display text-2xl font-bold">Add Product</h1>
+      <h1 className="mb-6 font-display text-xl font-semibold md:text-2xl md:font-bold">Add Product</h1>
       <ProductForm categories={categoryOptions} />
     </>
   );

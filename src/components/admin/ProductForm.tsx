@@ -498,7 +498,7 @@ export function ProductForm({ categories, initial }: { categories: Category[]; i
 function Card({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="rounded-2xl border border-brand-border bg-white p-4 sm:p-6">
-      <h3 className="mb-4 text-base font-bold" dangerouslySetInnerHTML={{ __html: title }} />
+      <h3 className="mb-4 text-[15px] font-semibold md:text-base md:font-bold" dangerouslySetInnerHTML={{ __html: title }} />
       {children}
     </section>
   );

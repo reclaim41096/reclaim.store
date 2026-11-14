@@ -30,20 +30,20 @@ export default async function AdminDashboardPage() {
 
   return (
     <>
-      <div className="mb-7 flex flex-wrap items-center justify-between gap-4">
+      <div className="mb-5 flex flex-wrap items-center justify-between gap-3 md:mb-7 md:gap-4">
         <div>
-          <h1 className="font-display text-2xl font-bold">Dashboard</h1>
-          <div className="mt-1 text-[13px] text-ink-faint">Welcome back — here&apos;s what&apos;s happening today.</div>
+          <h1 className="font-display text-xl font-semibold md:text-2xl md:font-bold">Dashboard</h1>
+          <div className="mt-0.5 text-[12px] text-ink-faint md:mt-1 md:text-[13px]">Welcome back — here&apos;s what&apos;s happening today.</div>
         </div>
         <Link
           href="/admin/products/new"
-          className="flex items-center gap-2 rounded-lg bg-brand px-5 py-3 text-sm font-semibold text-white hover:bg-brand-dark"
+          className="flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2.5 text-[13px] font-semibold text-white hover:bg-brand-dark md:gap-2 md:px-5 md:py-3 md:text-sm"
         >
           <LuPlus size={18} /> Add Product
         </Link>
       </div>
 
-      <div className="mb-7 grid grid-cols-1 gap-4 min-[480px]:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+      <div className="mb-5 grid grid-cols-2 gap-3 md:mb-7 md:gap-5 lg:grid-cols-4">
         <StatCard label="Total Revenue" value={formatNaira(revenue)} Icon={LuBanknote} />
         <StatCard label="Orders" value={String((orders ?? []).length)} Icon={LuReceipt} />
         <StatCard label="Products" value={String(productCount ?? 0)} Icon={LuPackage} />
@@ -52,9 +52,9 @@ export default async function AdminDashboardPage() {
 
       <div className="flex flex-wrap gap-5">
         <div className="min-w-0 flex-1 basis-full rounded-2xl border border-brand-border bg-white p-4 sm:p-6 lg:basis-[560px]">
-          <h3 className="mb-4 text-base font-bold">Recent Orders</h3>
+          <h3 className="mb-3 text-[15px] font-semibold md:mb-4 md:text-base md:font-bold">Recent Orders</h3>
           <div className="overflow-x-auto">
-          <table className="w-full min-w-[480px] border-collapse text-sm">
+          <table className="w-full min-w-[460px] border-collapse text-[12px] md:text-sm">
             <thead>
               <tr className="text-left text-ink-faint">
                 <th className="py-2 font-semibold">Order</th>
@@ -73,9 +73,9 @@ export default async function AdminDashboardPage() {
               )}
               {recentOrders.map((o) => (
                 <tr key={o.order_code} className="border-t border-[#EEF2F0]">
-                  <td className="py-2.5 font-semibold">{o.order_code}</td>
-                  <td className="py-2.5">{o.customer_name}</td>
-                  <td className="py-2.5">{formatNaira(Number(o.total))}</td>
+                  <td className="py-2 font-semibold md:py-2.5">{o.order_code}</td>
+                  <td className="py-2 md:py-2.5">{o.customer_name}</td>
+                  <td className="py-2 md:py-2.5">{formatNaira(Number(o.total))}</td>
                   <td className="py-2.5">
                     <StatusPill status={o.status} />
                   </td>
@@ -87,7 +87,7 @@ export default async function AdminDashboardPage() {
         </div>
 
         <div className="min-w-0 flex-1 basis-full rounded-2xl border border-brand-border bg-white p-4 sm:p-6 lg:basis-[320px]">
-          <h3 className="mb-4 text-base font-bold">Low Stock Alerts</h3>
+          <h3 className="mb-3 text-[15px] font-semibold md:mb-4 md:text-base md:font-bold">Low Stock Alerts</h3>
           <div className="flex flex-col gap-3.5">
             {(lowStock ?? []).length === 0 && <p className="text-sm text-ink-faint">All stocked up.</p>}
             {(lowStock ?? []).map((v: any, i: number) => (
@@ -113,14 +113,14 @@ export default async function AdminDashboardPage() {
 
 function StatCard({ label, value, warn, Icon }: { label: string; value: string; warn?: boolean; Icon: IconType }) {
   return (
-    <div className="rounded-2xl border border-brand-border bg-white p-5">
-      <div className="flex items-center justify-between">
-        <div className="text-[13px] font-semibold text-ink-faint">{label}</div>
-        <span className={`flex h-9 w-9 items-center justify-center rounded-lg ${warn && value !== '0' ? 'bg-[#FDE4E4] text-[#C13C3C]' : 'bg-brand-tint text-brand'}`}>
-          <Icon size={18} />
+    <div className="rounded-2xl border border-brand-border bg-white p-3.5 md:p-5">
+      <div className="flex items-center justify-between gap-2">
+        <div className="text-[11px] font-semibold leading-tight text-ink-faint md:text-[13px]">{label}</div>
+        <span className={`flex h-7 w-7 flex-none items-center justify-center rounded-lg md:h-9 md:w-9 ${warn && value !== '0' ? 'bg-[#FDE4E4] text-[#C13C3C]' : 'bg-brand-tint text-brand'}`}>
+          <Icon className="h-[15px] w-[15px] md:h-[18px] md:w-[18px]" />
         </span>
       </div>
-      <div className={`mt-2 text-[26px] font-bold ${warn && value !== '0' ? 'text-[#C13C3C]' : ''}`}>{value}</div>
+      <div className={`mt-1.5 text-[19px] font-semibold md:mt-2 md:text-[26px] md:font-bold ${warn && value !== '0' ? 'text-[#C13C3C]' : ''}`}>{value}</div>
     </div>
   );
 }

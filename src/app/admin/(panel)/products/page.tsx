@@ -20,14 +20,14 @@ export default async function AdminProductsPage() {
 
   return (
     <>
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3 md:mb-6 md:gap-4">
         <div>
-          <h1 className="font-display text-2xl font-bold">Products</h1>
-          <div className="mt-1 text-[13px] text-ink-faint">{products?.length ?? 0} products</div>
+          <h1 className="font-display text-xl font-semibold md:text-2xl md:font-bold">Products</h1>
+          <div className="mt-0.5 text-[12px] text-ink-faint md:mt-1 md:text-[13px]">{products?.length ?? 0} products</div>
         </div>
         <Link
           href="/admin/products/new"
-          className="flex items-center gap-2 rounded-lg bg-brand px-5 py-3 text-sm font-semibold text-white hover:bg-brand-dark"
+          className="flex items-center gap-1.5 rounded-lg bg-brand px-3.5 py-2.5 text-[13px] font-semibold text-white hover:bg-brand-dark md:gap-2 md:px-5 md:py-3 md:text-sm"
         >
           <LuPlus size={18} /> Add Product
         </Link>
@@ -36,14 +36,14 @@ export default async function AdminProductsPage() {
       <div className="overflow-x-auto rounded-2xl border border-brand-border bg-white">
         <table className="w-full min-w-[720px] border-collapse">
           <thead>
-            <tr className="text-left text-xs font-semibold uppercase tracking-wide text-ink-faint">
-              <th className="px-4 py-3">Product</th>
-              <th className="px-4 py-3">Section / Category</th>
-              <th className="px-4 py-3">Options</th>
-              <th className="px-4 py-3">Price</th>
-              <th className="px-4 py-3">Stock</th>
-              <th className="px-4 py-3">Status</th>
-              <th className="px-4 py-3" />
+            <tr className="text-left text-[11px] font-semibold uppercase md:text-xs tracking-wide text-ink-faint">
+              <th className="px-3 py-2.5 md:px-4 md:py-3">Product</th>
+              <th className="px-3 py-2.5 md:px-4 md:py-3">Section / Category</th>
+              <th className="px-3 py-2.5 md:px-4 md:py-3">Options</th>
+              <th className="px-3 py-2.5 md:px-4 md:py-3">Price</th>
+              <th className="px-3 py-2.5 md:px-4 md:py-3">Stock</th>
+              <th className="px-3 py-2.5 md:px-4 md:py-3">Status</th>
+              <th className="px-3 py-2.5 md:px-4 md:py-3" />
             </tr>
           </thead>
           <tbody>
@@ -58,20 +58,20 @@ export default async function AdminProductsPage() {
                     : `${formatNaira(Math.min(...prices))}–${formatNaira(Math.max(...prices))}`;
 
               return (
-                <tr key={p.id} className="border-t border-[#EEF2F0] text-sm">
-                  <td className="whitespace-nowrap px-4 py-3.5 font-semibold">{p.name}</td>
-                  <td className="px-4 py-3.5 text-ink-light">
+                <tr key={p.id} className="border-t border-[#EEF2F0] text-[12px] md:text-sm">
+                  <td className="whitespace-nowrap px-3 py-2.5 md:px-4 md:py-3.5 font-semibold">{p.name}</td>
+                  <td className="px-3 py-2.5 md:px-4 md:py-3.5 text-ink-light">
                     {p.category?.section?.name} / {p.category?.name}
                   </td>
-                  <td className="px-4 py-3.5 text-ink-light">{(p.product_options ?? []).length || '—'}</td>
-                  <td className="px-4 py-3.5 font-semibold">{priceLabel}</td>
-                  <td className={stock < 10 ? 'px-4 py-3.5 font-semibold text-[#C13C3C]' : 'px-4 py-3.5'}>
+                  <td className="px-3 py-2.5 md:px-4 md:py-3.5 text-ink-light">{(p.product_options ?? []).length || '—'}</td>
+                  <td className="px-3 py-2.5 md:px-4 md:py-3.5 font-semibold">{priceLabel}</td>
+                  <td className={stock < 10 ? 'px-3 py-2.5 md:px-4 md:py-3.5 font-semibold text-[#C13C3C]' : 'px-3 py-2.5 md:px-4 md:py-3.5'}>
                     {stock}
                   </td>
-                  <td className="px-4 py-3.5">
+                  <td className="px-3 py-2.5 md:px-4 md:py-3.5">
                     <StatusPill status={p.status} />
                   </td>
-                  <td className="px-4 py-3.5">
+                  <td className="px-3 py-2.5 md:px-4 md:py-3.5">
                     <div className="flex gap-1">
                       <Link
                         href={`/admin/products/${p.id}/edit`}

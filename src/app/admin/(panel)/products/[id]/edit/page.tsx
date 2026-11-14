@@ -90,7 +90,7 @@ export default async function EditProductPage({ params }: { params: { id: string
         </Link>{' '}
         / Edit Product
       </div>
-      <h1 className="mb-6 font-display text-2xl font-bold">Edit Product</h1>
+      <h1 className="mb-6 font-display text-xl font-semibold md:text-2xl md:font-bold">Edit Product</h1>
       <ProductForm categories={categoryOptions} initial={initial} />
     </>
   );
