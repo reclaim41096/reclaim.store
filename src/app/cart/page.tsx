@@ -7,6 +7,7 @@ import { useCart } from '@/components/CartProvider';
 import { formatNaira } from '@/lib/format';
 import { LuArrowLeft, LuArrowRight, LuMinus, LuPlus, LuX } from 'react-icons/lu';
 import { CheckoutSteps } from '@/components/CheckoutSteps';
+import Image from 'next/image';
 
 const DELIVERY_FEE = 1000;
 
@@ -39,11 +40,18 @@ export default function CartPage() {
                   key={item.variantId}
                   className="flex flex-wrap items-center gap-x-4 gap-y-3 rounded-2xl border border-brand-border bg-white p-4 sm:p-5"
                 >
-                  <div className="min-w-0 flex-1 basis-full sm:basis-0">
-                    <div className="text-[15px] font-bold">{item.productName}</div>
-                    {item.variantLabel && (
-                      <div className="mt-1 text-[13px] text-ink-light">{item.variantLabel}</div>
+                  <div className="flex min-w-0 flex-1 basis-full items-center gap-3.5 sm:basis-0">
+                    {item.imageUrl && (
+                      <div className="relative h-16 w-16 flex-none overflow-hidden rounded-xl border border-brand-border bg-white">
+                        <Image src={item.imageUrl} alt={item.productName} fill sizes="64px" className="object-contain p-1" />
+                      </div>
                     )}
+                    <div className="min-w-0">
+                      <div className="text-[15px] font-bold">{item.productName}</div>
+                      {item.variantLabel && (
+                        <div className="mt-1 text-[13px] text-ink-light">{item.variantLabel}</div>
+                      )}
+                    </div>
                   </div>
                   <div className="flex items-center overflow-hidden rounded-full border border-brand-border">
                     <button

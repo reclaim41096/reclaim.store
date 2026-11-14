@@ -428,7 +428,7 @@ export type Database = {
     }
     Enums: {
       order_status: "pending" | "processing" | "delivered" | "cancelled"
-      payment_method: "card" | "bank_transfer" | "pay_on_delivery"
+      payment_method: "card" | "bank_transfer" | "pay_on_delivery" | "paystack" | "whatsapp"
       product_status: "active" | "draft" | "out_of_stock"
     }
     CompositeTypes: {
@@ -558,7 +558,7 @@ export const Constants = {
   public: {
     Enums: {
       order_status: ["pending", "processing", "delivered", "cancelled"],
-      payment_method: ["card", "bank_transfer", "pay_on_delivery"],
+      payment_method: ["card", "bank_transfer", "pay_on_delivery", "paystack", "whatsapp"],
       product_status: ["active", "draft", "out_of_stock"],
     },
   },

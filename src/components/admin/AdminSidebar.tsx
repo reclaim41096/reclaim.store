@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { LuLayoutDashboard, LuMenu, LuPackage, LuX } from 'react-icons/lu';
 import { SignOutButton } from './SignOutButton';
+import { Logo } from '../Logo';
 
 const LINKS = [
   { href: '/admin', label: 'Dashboard', Icon: LuLayoutDashboard },
@@ -19,9 +20,9 @@ export function AdminSidebar({ email }: { email: string | null }) {
   useEffect(() => setOpen(false), [pathname]);
 
   const brand = (
-    <div className="flex items-baseline gap-2">
-      <span className="font-wordmark text-2xl text-brand">Reclaim</span>
-      <span className="text-xs font-medium text-ink-faint">Admin</span>
+    <div className="flex items-center gap-2.5">
+      <Logo height={30} glossy />
+      <span className="rounded-full bg-brand-tint px-2 py-0.5 font-nav text-[11px] tracking-wide text-brand">Admin</span>
     </div>
   );
 

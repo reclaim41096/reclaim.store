@@ -8,11 +8,13 @@ import { Footer } from '@/components/Footer';
 import { useCart } from '@/components/CartProvider';
 import { createClient } from '@/lib/supabase/client';
 import { formatNaira } from '@/lib/format';
-import { LuArrowLeft } from 'react-icons/lu';
+import { LuArrowLeft, LuCreditCard, LuLoader } from 'react-icons/lu';
+import { FaWhatsapp } from 'react-icons/fa6';
+import { NIGERIA_LOCATIONS, OTHER_CITY, STATES } from '@/lib/nigeria-locations';
+import { buildOrderMessage, whatsappUrl } from '@/lib/whatsapp';
 import { CheckoutSteps } from '@/components/CheckoutSteps';
 
 const DELIVERY_FEE = 1000;
-const NIGERIAN_STATES = ['Lagos', 'Ogun', 'Oyo', 'Abuja (FCT)', 'Rivers', 'Kano', 'Other'];
 
 function generateOrderCode() {
   const suffix = Math.random().toString(36).slice(2, 7).toUpperCase();
@@ -30,22 +32,29 @@ export default function CheckoutPage() {
     phone: '',
     email: '',
     address: '',
-    city: 'Lagos',
-    state: 'Lagos',
-    paymentMethod: 'pay_on_delivery' as 'card' | 'bank_transfer' | 'pay_on_delivery',
+    state: '',
+    city: '',
+    cityOther: '',
+    paymentMethod: 'paystack' as 'paystack' | 'whatsapp',
   });
+
+  const cities = form.state ? [...NIGERIA_LOCATIONS[form.state], OTHER_CITY] : [];
+  const finalCity = form.city === OTHER_CITY ? form.cityOther.trim() : form.city;
 
   const delivery = subtotal === 0 ? 0 : DELIVERY_FEE;
   const total = subtotal + delivery;
 
   const handleSubmit = async () => {
     if (items.length === 0) return;
-    if (!form.name || !form.phone || !form.address) {
-      setError('Please fill in your name, phone number and delivery address.');
+    if (!form.name.trim() || !form.phone.trim() || !form.address.trim() || !form.state || !finalCity) {
+      setError('Please fill in your name, phone number, state, city and delivery address.');
       return;
     }
     setSubmitting(true);
     setError(null);
+
+    // For WhatsApp, open the tab right now (inside the click) so mobile browsers don't block it
+    const waWindow = form.paymentMethod === 'whatsapp' ? window.open('', '_blank') : null;
 
     const supabase = createClient();
     const orderCode = generateOrderCode();
@@ -54,11 +63,11 @@ export default function CheckoutPage() {
       .from('orders')
       .insert({
         order_code: orderCode,
-        customer_name: form.name,
-        email: form.email || null,
-        phone: form.phone,
-        address: form.address,
-        city: form.city,
+        customer_name: form.name.trim(),
+        email: form.email.trim() || null,
+        phone: form.phone.trim(),
+        address: form.address.trim(),
+        city: finalCity,
         state: form.state,
         payment_method: form.paymentMethod,
         subtotal,
@@ -69,6 +78,7 @@ export default function CheckoutPage() {
       .single();
 
     if (orderError || !order) {
+      waWindow?.close();
       setError('Something went wrong placing your order. Please try again.');
       setSubmitting(false);
       return;
@@ -86,13 +96,54 @@ export default function CheckoutPage() {
     );
 
     if (itemsError) {
+      waWindow?.close();
       setError('Your order was started but items could not be saved. Please contact us.');
       setSubmitting(false);
       return;
     }
 
-    clear();
-    router.push(`/checkout/success?order=${orderCode}`);
+    if (form.paymentMethod === 'whatsapp') {
+      const message = buildOrderMessage({
+        orderCode,
+        name: form.name.trim(),
+        phone: form.phone.trim(),
+        email: form.email.trim(),
+        address: form.address.trim(),
+        city: finalCity,
+        state: form.state,
+        items,
+        subtotal,
+        delivery,
+        total,
+      });
+      try {
+        window.sessionStorage.setItem(`reclaim-wa-${orderCode}`, message);
+      } catch {
+        /* ignore */
+      }
+      const url = whatsappUrl(message);
+      if (waWindow) waWindow.location.href = url;
+      else window.open(url, '_blank');
+      clear();
+      router.push(`/checkout/success?order=${orderCode}&via=whatsapp`);
+      return;
+    }
+
+    // Paystack
+    try {
+      const res = await fetch('/api/paystack/initialize', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderCode }),
+      });
+      const json = await res.json();
+      if (!res.ok || !json.url) throw new Error(json.error ?? 'Could not start payment.');
+      clear();
+      window.location.href = json.url;
+    } catch (e: any) {
+      setError(`${e?.message ?? 'Could not start payment.'} Your order ${orderCode} is saved; you can pay via WhatsApp instead.`);
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -138,53 +189,79 @@ export default function CheckoutPage() {
                   />
                 </Field>
               </div>
-              <Field label="City">
-                <input
-                  value={form.city}
-                  onChange={(e) => setForm((f) => ({ ...f, city: e.target.value }))}
-                />
-              </Field>
               <Field label="State">
                 <select
                   value={form.state}
-                  onChange={(e) => setForm((f) => ({ ...f, state: e.target.value }))}
+                  onChange={(e) => setForm((f) => ({ ...f, state: e.target.value, city: '', cityOther: '' }))}
                 >
-                  {NIGERIAN_STATES.map((s) => (
-                    <option key={s}>{s}</option>
+                  <option value="">Select state</option>
+                  {STATES.map((st) => (
+                    <option key={st} value={st}>
+                      {st}
+                    </option>
                   ))}
                 </select>
               </Field>
+              <Field label="City / Area">
+                <select
+                  value={form.city}
+                  disabled={!form.state}
+                  onChange={(e) => setForm((f) => ({ ...f, city: e.target.value }))}
+                  className="disabled:bg-[#FBF7F6] disabled:text-ink-faint"
+                >
+                  <option value="">{form.state ? 'Select city' : 'Select a state first'}</option>
+                  {cities.map((c) => (
+                    <option key={c} value={c}>
+                      {c}
+                    </option>
+                  ))}
+                </select>
+              </Field>
+              {form.city === OTHER_CITY && (
+                <div className="sm:col-span-2">
+                  <Field label="Your city / area">
+                    <input
+                      value={form.cityOther}
+                      onChange={(e) => setForm((f) => ({ ...f, cityOther: e.target.value }))}
+                      placeholder="Type your city or area"
+                    />
+                  </Field>
+                </div>
+              )}
             </div>
           </div>
 
           <div className="rounded-2xl border border-brand-border bg-white p-6">
             <h3 className="mb-5 text-[17px] font-bold">Payment Method</h3>
-            <div className="flex flex-wrap gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {(
                 [
-                  ['card', 'Card'],
-                  ['bank_transfer', 'Bank Transfer'],
-                  ['pay_on_delivery', 'Pay on Delivery'],
+                  ['paystack', 'Pay with Paystack', 'Card, bank or USSD, securely online', LuCreditCard],
+                  ['whatsapp', 'Pay via WhatsApp chat', 'Send your order to us on WhatsApp', FaWhatsapp],
                 ] as const
-              ).map(([value, label]) => (
-                <button
-                  key={value}
-                  onClick={() => setForm((f) => ({ ...f, paymentMethod: value }))}
-                  className={`flex-1 rounded-xl border px-4 py-3.5 text-center text-[13px] font-semibold ${
-                    form.paymentMethod === value
-                      ? 'border-brand bg-brand text-white'
-                      : 'border-brand-border bg-white'
-                  }`}
-                >
-                  {label}
-                </button>
-              ))}
+              ).map(([value, label, sub, Icon]) => {
+                const on = form.paymentMethod === value;
+                return (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => setForm((f) => ({ ...f, paymentMethod: value }))}
+                    aria-pressed={on}
+                    className={`flex items-center gap-3.5 rounded-xl border px-4 py-4 text-left ${
+                      on ? 'border-brand bg-brand-tint ring-1 ring-brand' : 'border-brand-border bg-white hover:border-brand/50'
+                    }`}
+                  >
+                    <span className={`flex h-11 w-11 flex-none items-center justify-center rounded-xl ${on ? 'bg-brand text-white' : 'bg-brand-tint text-brand'}`}>
+                      <Icon size={22} />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block text-[14px] font-bold">{label}</span>
+                      <span className="block text-xs text-ink-light">{sub}</span>
+                    </span>
+                  </button>
+                );
+              })}
             </div>
-            {form.paymentMethod === 'card' && (
-              <p className="mt-4 text-xs text-ink-faint">
-                Card payment integration coming soon — select Pay on Delivery or Bank Transfer for now.
-              </p>
-            )}
           </div>
 
           <Link href="/cart" className="text-sm font-semibold">
@@ -228,7 +305,13 @@ export default function CheckoutPage() {
             disabled={submitting || items.length === 0}
             className="rounded-full bg-brand py-3.5 text-[15px] font-semibold text-white hover:bg-brand-dark disabled:bg-ink-faint"
           >
-            {submitting ? 'Placing order…' : 'Place Order'}
+            {submitting ? (
+              <span className="inline-flex items-center justify-center gap-2"><LuLoader size={18} className="animate-spin" /> Processing…</span>
+            ) : form.paymentMethod === 'whatsapp' ? (
+              'Send Order on WhatsApp'
+            ) : (
+              'Pay with Paystack'
+            )}
           </button>
           <div className="text-center text-xs text-ink-faint">
             By placing your order you agree to our Terms &amp; Returns Policy

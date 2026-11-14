@@ -14,7 +14,8 @@ export default async function EditProductPage({ params }: { params: { id: string
       .from('products')
       .select(
         `*, product_options(id, name, position, product_option_values(id, value, position)),
-         product_variants(id, sku, price, stock, variant_option_values(option_value_id))`,
+         product_images(url, position),
+         product_variants(id, sku, price, stock, image_url, price_unit, variant_option_values(option_value_id))`,
       )
       .eq('id', params.id)
       .maybeSingle(),
@@ -54,6 +55,10 @@ export default async function EditProductPage({ params }: { params: { id: string
     wholesaleAvailable: product.wholesale_available,
     status: product.status,
     weightG: product.weight_g,
+    images: [
+      product.cover_image_url,
+      ...(product.product_images ?? []).slice().sort((a: any, b: any) => a.position - b.position).map((i: any) => i.url),
+    ].filter((u: string | null, i: number, arr: (string | null)[]): u is string => !!u && arr.indexOf(u) === i),
     options: sortedOptions.map((opt: any) => ({
       name: opt.name,
       values: (opt.product_option_values ?? [])
@@ -71,6 +76,8 @@ export default async function EditProductPage({ params }: { params: { id: string
         sku: v.sku,
         price: Number(v.price),
         stock: v.stock,
+        imageUrl: v.image_url ?? null,
+        priceUnit: v.price_unit ?? null,
       };
     }),
   };

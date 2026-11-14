@@ -8,6 +8,7 @@ export type CartItem = {
   productName: string;
   variantLabel: string | null;
   unitPrice: number;
+  imageUrl?: string | null;
   quantity: number;
 };
 

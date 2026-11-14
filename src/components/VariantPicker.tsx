@@ -205,6 +205,7 @@ export function VariantPicker({
         productName,
         variantLabel: label || null,
         unitPrice: selectedVariant.price,
+        imageUrl: selectedVariant.imageUrl ?? coverImage ?? null,
       },
       qty,
     );
