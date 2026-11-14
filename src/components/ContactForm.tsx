@@ -42,74 +42,98 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-7">
-      <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-        <UnderlineField label="Your Name">
+    <form onSubmit={handleSubmit} className="grid grid-cols-12 gap-x-6 gap-y-10">
+      {/* 01 — Name: wide, flush left */}
+      <div className="col-span-12 sm:col-span-7">
+        <NumberedField n="01" label="Your Name">
           <input
             value={form.name}
             onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
             placeholder="Full name"
           />
-        </UnderlineField>
-        <UnderlineField label="Phone Number (optional)">
+        </NumberedField>
+      </div>
+
+      {/* 02 — Phone: narrow, pushed down + right */}
+      <div className="col-span-12 sm:col-span-5 sm:mt-10">
+        <NumberedField n="02" label="Phone Number (optional)">
           <input
             value={form.phone}
             onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
             placeholder="080xxxxxxxx"
           />
-        </UnderlineField>
-        <div className="sm:col-span-2">
-          <UnderlineField label="Email Address">
-            <input
-              type="email"
-              value={form.email}
-              onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-              placeholder="you@example.com"
-            />
-          </UnderlineField>
-        </div>
-        <div className="sm:col-span-2">
-          <UnderlineField label="Subject (optional)">
-            <input
-              value={form.subject}
-              onChange={(e) => setForm((f) => ({ ...f, subject: e.target.value }))}
-              placeholder="Wholesale enquiry, order question, etc."
-            />
-          </UnderlineField>
-        </div>
-        <div className="sm:col-span-2">
-          <UnderlineField label="Message">
-            <textarea
-              value={form.message}
-              onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
-              placeholder="How can we help?"
-              rows={4}
-            />
-          </UnderlineField>
-        </div>
+        </NumberedField>
+      </div>
+
+      {/* 03 — Email: offset right, narrower */}
+      <div className="col-span-12 sm:col-span-8 sm:col-start-5 sm:-mt-4">
+        <NumberedField n="03" label="Email Address">
+          <input
+            type="email"
+            value={form.email}
+            onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+            placeholder="you@example.com"
+          />
+        </NumberedField>
+      </div>
+
+      {/* 04 — Subject: flush left, narrow */}
+      <div className="col-span-12 sm:col-span-6 sm:mt-4">
+        <NumberedField n="04" label="Subject (optional)">
+          <input
+            value={form.subject}
+            onChange={(e) => setForm((f) => ({ ...f, subject: e.target.value }))}
+            placeholder="Wholesale, order, enquiry…"
+          />
+        </NumberedField>
+      </div>
+
+      {/* 05 — Message: full width */}
+      <div className="col-span-12 sm:mt-6">
+        <NumberedField n="05" label="Message">
+          <textarea
+            value={form.message}
+            onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
+            placeholder="How can we help?"
+            rows={4}
+          />
+        </NumberedField>
       </div>
 
       {status === 'error' && (
-        <p className="text-sm text-[#C13C3C]">
+        <p className="col-span-12 text-sm text-[#C13C3C]">
           Please fill in your name, email and message, then try again.
         </p>
       )}
 
-      <button
-        type="submit"
-        disabled={status === 'submitting'}
-        className="group flex w-fit items-center gap-2.5 rounded-full bg-brand px-7 py-4 text-[15px] font-semibold text-white hover:bg-brand-dark disabled:bg-ink-faint"
-      >
-        {status === 'submitting' ? 'Sending…' : 'Leave us a Message'}
-        <span className="transition-transform group-hover:translate-x-1">→</span>
-      </button>
+      <div className="col-span-12 mt-2">
+        <button
+          type="submit"
+          disabled={status === 'submitting'}
+          className="group flex w-fit items-center gap-2.5 rounded-full bg-brand px-7 py-4 text-[15px] font-semibold text-white hover:bg-brand-dark disabled:bg-ink-faint"
+        >
+          {status === 'submitting' ? 'Sending…' : 'Send to Reclaim'}
+          <span className="transition-transform group-hover:translate-x-1">→</span>
+        </button>
+      </div>
     </form>
   );
 }
 
-function UnderlineField({ label, children }: { label: string; children: React.ReactNode }) {
+function NumberedField({
+  n,
+  label,
+  children,
+}: {
+  n: string;
+  label: string;
+  children: React.ReactNode;
+}) {
   return (
-    <div className="flex flex-col">
+    <div className="relative flex flex-col">
+      <span className="pointer-events-none absolute -top-7 right-0 font-shout text-[13px] font-extrabold text-brand/25">
+        {n}
+      </span>
       <label className="mb-2 text-[13px] font-semibold uppercase tracking-wide text-ink-light">
         {label}
       </label>

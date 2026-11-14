@@ -18,11 +18,6 @@ export default async function HomePage() {
     .slice(0, 4);
   const honey = products.find((p) => p.category.slug === 'honey');
 
-  const heroSlides = products
-    .filter((p) => p.cover_image_url)
-    .slice(0, 6)
-    .map((p) => ({ src: p.cover_image_url as string, name: p.name }));
-
   return (
     <>
       <div className="bg-ink py-2.5 text-center text-[13px] font-medium text-white">
@@ -30,7 +25,7 @@ export default async function HomePage() {
       </div>
       <Header />
 
-      <FullHero slides={heroSlides} />
+      <FullHero videoSrc="/videos/hero-wash.mp4" />
 
       {/* Categories */}
       <section className="px-6 py-16 md:px-12">

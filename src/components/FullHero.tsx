@@ -1,38 +1,17 @@
-'use client';
-
 import Link from 'next/link';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
 
-type Slide = { src: string; name: string };
-
-export function FullHero({ slides }: { slides: Slide[] }) {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    if (slides.length <= 1) return;
-    const id = setInterval(() => setIndex((i) => (i + 1) % slides.length), 4200);
-    return () => clearInterval(id);
-  }, [slides.length]);
-
+export function FullHero({ videoSrc, posterSrc }: { videoSrc: string; posterSrc?: string }) {
   return (
     <section className="relative h-[560px] w-full overflow-hidden bg-ink md:h-[640px]">
-      {slides.map((slide, i) => (
-        <div
-          key={slide.src}
-          className="absolute inset-0 transition-opacity duration-[1200ms] ease-in-out"
-          style={{ opacity: i === index ? 1 : 0 }}
-        >
-          <Image
-            src={slide.src}
-            alt={slide.name}
-            fill
-            priority={i === 0}
-            sizes="100vw"
-            className="object-cover"
-          />
-        </div>
-      ))}
+      <video
+        className="absolute inset-0 h-full w-full object-cover"
+        src={videoSrc}
+        poster={posterSrc}
+        autoPlay
+        loop
+        muted
+        playsInline
+      />
 
       <div className="absolute inset-0 bg-gradient-to-r from-ink/85 via-ink/40 to-ink/10" />
       <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
@@ -65,21 +44,6 @@ export function FullHero({ slides }: { slides: Slide[] }) {
           </Link>
         </div>
       </div>
-
-      {slides.length > 1 && (
-        <div className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 gap-2">
-          {slides.map((slide, i) => (
-            <button
-              key={slide.src}
-              aria-label={`Show ${slide.name}`}
-              onClick={() => setIndex(i)}
-              className={`h-1.5 rounded-full transition-all ${
-                i === index ? 'w-6 bg-white' : 'w-1.5 bg-white/40'
-              }`}
-            />
-          ))}
-        </div>
-      )}
     </section>
   );
 }

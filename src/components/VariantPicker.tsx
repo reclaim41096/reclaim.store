@@ -129,10 +129,12 @@ export function VariantPicker({
               </div>
             ))}
 
-            <div className="flex items-baseline gap-2">
+            <div className="flex flex-col gap-1.5">
               <span className="text-2xl font-bold">{formatNaira(selectedVariant.price)}</span>
               {selectedVariant.priceUnit && (
-                <span className="text-sm font-medium text-ink-faint">/{selectedVariant.priceUnit}</span>
+                <span className="w-fit rounded-md bg-brand-tint px-2.5 py-1 text-[12px] font-extrabold uppercase tracking-wide text-brand-dark">
+                  Price per {selectedVariant.priceUnit}
+                </span>
               )}
             </div>
 
