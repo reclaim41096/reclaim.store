@@ -63,6 +63,9 @@ export function Header() {
   }, [count]);
 
   return (
+    <>
+    {/* Backdrop lives OUTSIDE the header: backdrop-blur on the header would otherwise trap a fixed child inside it */}
+    {open && <div className="fixed inset-0 z-30 bg-ink/40 lg:hidden" onClick={() => setOpen(false)} aria-hidden />}
     <header
       className={`sticky top-0 z-40 border-b px-5 py-3.5 backdrop-blur-md transition-shadow duration-200 lg:px-12 lg:py-4 ${
         scrolled ? 'border-brand-border bg-white/90 shadow-[0_6px_24px_-12px_rgba(227,30,36,0.25)]' : 'border-brand-border bg-white/80'
@@ -135,7 +138,6 @@ export function Header() {
       {/* Mobile / tablet menu: dims the page; tap outside to close */}
       {open && (
         <>
-          <div className="fixed inset-0 -z-10 bg-ink/40 lg:hidden" onClick={() => setOpen(false)} aria-hidden />
           <nav className="absolute inset-x-0 top-full border-b border-brand-border bg-white px-4 pb-4 pt-2 shadow-lg lg:hidden">
             <div className="flex flex-col gap-1 rounded-2xl border border-brand-border bg-brand-surface p-1.5">
               {NAV.map((l) => {
@@ -165,5 +167,6 @@ export function Header() {
         </>
       )}
     </header>
+    </>
   );
 }
