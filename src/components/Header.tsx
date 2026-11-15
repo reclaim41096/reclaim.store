@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LuMenu, LuX } from 'react-icons/lu';
+import { LuChevronRight, LuMenu, LuX } from 'react-icons/lu';
 import { useCart } from './CartProvider';
 import { CartIcon } from './CartIcon';
 import { Logo } from './Logo';
@@ -30,6 +30,13 @@ export function Header() {
   const prevCount = useRef(count);
 
   useEffect(() => setOpen(false), [pathname]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -113,32 +120,36 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile / tablet menu */}
+      {/* Mobile / tablet menu: dims the page; tap outside to close */}
       {open && (
-        <nav className="absolute inset-x-0 top-full z-40 border-b border-brand-border bg-white px-5 pb-5 pt-3 shadow-lg lg:hidden">
-          <div className="flex flex-col gap-1.5 rounded-3xl border border-brand-border bg-brand-tint/60 p-2">
-            {NAV.map((l) => {
-              const active = isActive(pathname, l.href);
-              return (
-                <Link
-                  key={l.href}
-                  href={l.href}
-                  className={`rounded-2xl px-5 py-3 font-nav text-[17px] tracking-wide ${
-                    active ? 'bg-brand text-white' : 'text-ink hover:bg-white'
-                  }`}
-                >
-                  {l.label}
-                </Link>
-              );
-            })}
-          </div>
-          <Link
-            href="/shop"
-            className="mt-3 block rounded-full bg-brand py-3 text-center font-nav text-[17px] tracking-wide text-white"
-          >
-            Shop Now
-          </Link>
-        </nav>
+        <>
+          <div className="fixed inset-0 -z-10 bg-ink/40 lg:hidden" onClick={() => setOpen(false)} aria-hidden />
+          <nav className="absolute inset-x-0 top-full border-b border-brand-border bg-white px-4 pb-4 pt-2 shadow-lg lg:hidden">
+            <div className="flex flex-col gap-1 rounded-2xl border border-brand-border bg-brand-surface p-1.5">
+              {NAV.map((l) => {
+                const active = isActive(pathname, l.href);
+                return (
+                  <Link
+                    key={l.href}
+                    href={l.href}
+                    className={`flex items-center justify-between rounded-xl px-4 py-2.5 font-nav text-[15px] tracking-wide ${
+                      active ? 'bg-brand text-white' : 'text-ink active:bg-brand-tint'
+                    }`}
+                  >
+                    {l.label}
+                    <LuChevronRight size={16} className={active ? 'text-white/80' : 'text-ink-faint'} />
+                  </Link>
+                );
+              })}
+            </div>
+            <Link
+              href="/shop"
+              className="mt-3 block rounded-full bg-brand py-2.5 text-center font-nav text-[15px] tracking-wide text-white active:bg-brand-dark"
+            >
+              Shop Now
+            </Link>
+          </nav>
+        </>
       )}
     </header>
   );
