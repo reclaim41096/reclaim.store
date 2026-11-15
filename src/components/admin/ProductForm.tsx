@@ -123,13 +123,18 @@ export function ProductForm({ categories, initial }: { categories: Category[]; i
 
     setVariantRows((prev) => {
       const byLabel = new Map(prev.map((r) => [r.label, r]));
+      const sharedUnit = prev.length > 0 && prev.every((r) => r.priceUnit === prev[0].priceUnit) ? prev[0].priceUnit : null;
       return labels.map(
         (label) =>
-          byLabel.get(label) ?? { label, sku: '', price: basePrice || '0', stock: '0', imageUrl: null, priceUnit: null },
+          byLabel.get(label) ?? { label, sku: '', price: basePrice || '0', stock: '0', imageUrl: null, priceUnit: sharedUnit },
       );
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [optionsSignature]);
+
+  // "Price is per": one unit for all variants (the storefront shows 'Price per <unit>' when they all match)
+  const commonUnit = variantRows.length > 0 && variantRows.every((r) => r.priceUnit === variantRows[0].priceUnit) ? (variantRows[0].priceUnit ?? '') : '';
+  const setCommonUnit = (v: string) => setVariantRows((rows) => rows.map((r) => ({ ...r, priceUnit: v === '' ? null : v })));
 
   const addOption = () => setOptions((o) => [...o, { id: nextTempId(), name: '', valuesText: '' }]);
   const removeOption = (id: string) => setOptions((o) => o.filter((x) => x.id !== id));
@@ -248,7 +253,7 @@ export function ProductForm({ categories, initial }: { categories: Category[]; i
           price: Number(row.price) || price,
           stock: Number(row.stock) || 0,
           image_url: row.imageUrl,
-          price_unit: row.priceUnit,
+          price_unit: row.priceUnit?.trim() || null,
         })
         .select('id')
         .single();
@@ -334,6 +339,22 @@ export function ProductForm({ categories, initial }: { categories: Category[]; i
               >
                 <LuPlus size={16} /> Add option
               </button>
+            </div>
+
+            <div className="mb-5 rounded-xl border border-brand-border bg-brand-surface p-3.5">
+              <Field
+                label="Price is per (optional)"
+                hint='Shows on the shop as "Price per carton" etc. Leave empty if the price is for a single item.'
+              >
+                <input list="price-units" value={commonUnit} onChange={(e) => setCommonUnit(e.target.value)} placeholder="e.g. carton, piece, dozen" />
+                <datalist id="price-units">
+                  <option value="carton" />
+                  <option value="piece" />
+                  <option value="dozen" />
+                  <option value="pack" />
+                  <option value="litre" />
+                </datalist>
+              </Field>
             </div>
 
             {options.length === 0 ? (
