@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 import { formatNaira } from '@/lib/format';
-import { DeleteProductButton } from '@/components/admin/DeleteProductButton';
-import { LuPencil, LuPlus } from 'react-icons/lu';
+import { ProductsTable, type ProductRow } from '@/components/admin/ProductsTable';
+import { LuPlus } from 'react-icons/lu';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,19 +11,39 @@ export default async function AdminProductsPage() {
   const { data: products } = await supabase
     .from('products')
     .select(
-      `id, name, status,
+      `id, name, status, created_at,
        category:categories(name, section:sections(name)),
        product_options(id),
        product_variants(price, stock)`,
     )
     .order('created_at', { ascending: false });
 
+  const rows: ProductRow[] = (products ?? []).map((p: any) => {
+    const prices = (p.product_variants ?? []).map((v: any) => Number(v.price));
+    const priceLabel =
+      prices.length === 0
+        ? '—'
+        : Math.min(...prices) === Math.max(...prices)
+          ? formatNaira(prices[0])
+          : `${formatNaira(Math.min(...prices))}–${formatNaira(Math.max(...prices))}`;
+    return {
+      id: p.id,
+      name: p.name,
+      status: p.status,
+      categoryLabel: `${p.category?.section?.name ?? ''} / ${p.category?.name ?? ''}`,
+      optionCount: (p.product_options ?? []).length,
+      priceLabel,
+      stock: (p.product_variants ?? []).reduce((sum: number, v: any) => sum + v.stock, 0),
+      createdAt: p.created_at,
+    };
+  });
+
   return (
     <>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3 md:mb-6 md:gap-4">
         <div>
           <h1 className="font-display text-xl font-semibold md:text-2xl md:font-bold">Products</h1>
-          <div className="mt-0.5 text-[12px] text-ink-faint md:mt-1 md:text-[13px]">{products?.length ?? 0} products</div>
+          <div className="mt-0.5 text-[12px] text-ink-faint md:mt-1 md:text-[13px]">{rows.length} products</div>
         </div>
         <Link
           href="/admin/products/new"
@@ -33,76 +53,7 @@ export default async function AdminProductsPage() {
         </Link>
       </div>
 
-      <div className="overflow-x-auto rounded-2xl border border-brand-border bg-white">
-        <table className="w-full min-w-[720px] border-collapse">
-          <thead>
-            <tr className="text-left text-[11px] font-semibold uppercase md:text-xs tracking-wide text-ink-faint">
-              <th className="px-3 py-2.5 md:px-4 md:py-3">Product</th>
-              <th className="px-3 py-2.5 md:px-4 md:py-3">Section / Category</th>
-              <th className="px-3 py-2.5 md:px-4 md:py-3">Options</th>
-              <th className="px-3 py-2.5 md:px-4 md:py-3">Price</th>
-              <th className="px-3 py-2.5 md:px-4 md:py-3">Stock</th>
-              <th className="px-3 py-2.5 md:px-4 md:py-3">Status</th>
-              <th className="px-3 py-2.5 md:px-4 md:py-3" />
-            </tr>
-          </thead>
-          <tbody>
-            {(products ?? []).map((p: any) => {
-              const prices = (p.product_variants ?? []).map((v: any) => Number(v.price));
-              const stock = (p.product_variants ?? []).reduce((sum: number, v: any) => sum + v.stock, 0);
-              const priceLabel =
-                prices.length === 0
-                  ? '—'
-                  : Math.min(...prices) === Math.max(...prices)
-                    ? formatNaira(prices[0])
-                    : `${formatNaira(Math.min(...prices))}–${formatNaira(Math.max(...prices))}`;
-
-              return (
-                <tr key={p.id} className="border-t border-brand-border text-[12px] md:text-sm">
-                  <td className="whitespace-nowrap px-3 py-2.5 md:px-4 md:py-3.5 font-semibold">{p.name}</td>
-                  <td className="px-3 py-2.5 md:px-4 md:py-3.5 text-ink-light">
-                    {p.category?.section?.name} / {p.category?.name}
-                  </td>
-                  <td className="px-3 py-2.5 md:px-4 md:py-3.5 text-ink-light">{(p.product_options ?? []).length || '—'}</td>
-                  <td className="px-3 py-2.5 md:px-4 md:py-3.5 font-semibold">{priceLabel}</td>
-                  <td className={stock < 10 ? 'px-3 py-2.5 md:px-4 md:py-3.5 font-semibold text-danger' : 'px-3 py-2.5 md:px-4 md:py-3.5'}>
-                    {stock}
-                  </td>
-                  <td className="px-3 py-2.5 md:px-4 md:py-3.5">
-                    <StatusPill status={p.status} />
-                  </td>
-                  <td className="px-3 py-2.5 md:px-4 md:py-3.5">
-                    <div className="flex gap-1">
-                      <Link
-                        href={`/admin/products/${p.id}/edit`}
-                        className="rounded-lg p-1.5 text-ink-light hover:bg-brand-tint"
-                        aria-label="Edit"
-                      >
-                        <LuPencil size={18} />
-                      </Link>
-                      <DeleteProductButton productId={p.id} />
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      <ProductsTable rows={rows} />
     </>
-  );
-}
-
-function StatusPill({ status }: { status: string }) {
-  const styles: Record<string, string> = {
-    active: 'bg-success-tint text-success',
-    draft: 'bg-ink-tint text-ink-light',
-    out_of_stock: 'bg-danger-tint text-danger',
-  };
-  const labels: Record<string, string> = { active: 'Active', draft: 'Draft', out_of_stock: 'Out of stock' };
-  return (
-    <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ${styles[status] ?? ''}`}>
-      {labels[status] ?? status}
-    </span>
   );
 }
