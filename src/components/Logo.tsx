@@ -1,13 +1,14 @@
 import Image from 'next/image';
 
-export function Logo({ height = 32, glossy = false }: { height?: number; glossy?: boolean }) {
-  // Site asset 800x268 (~2.985); glossy asset 900x302 (~2.98)
-  const width = Math.round(height * 2.985);
+// Cleaned, transparent logo (1000x337). Single source for the site, admin and favicon.
+const ASPECT = 1000 / 337;
+
+export function Logo({ height = 32 }: { height?: number }) {
   return (
     <Image
-      src={glossy ? '/images/brand/reclaim-logo-glossy.png' : '/images/brand/reclaim-logo.png'}
+      src="/images/brand/reclaim-logo.png"
       alt="Reclaim"
-      width={width}
+      width={Math.round(height * ASPECT)}
       height={height}
       priority
       className="h-auto"

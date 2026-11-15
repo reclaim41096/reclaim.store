@@ -21,7 +21,7 @@ export function AdminSidebar({ email }: { email: string | null }) {
 
   const brand = (
     <div className="flex items-center gap-2.5">
-      <Logo height={30} glossy />
+      <Logo height={30} />
       <span className="rounded-full bg-brand-tint px-2 py-0.5 font-nav text-[11px] tracking-wide text-brand-dark">Admin</span>
     </div>
   );
