@@ -1,7 +1,7 @@
 import Image from 'next/image';
 
-// Cleaned, transparent logo (1000x337). Single source for the site, admin and favicon.
-const ASPECT = 1000 / 337;
+// Cleaned, transparent logo (1000x334, red letters + underline). Single source for the site, admin and favicon.
+const ASPECT = 1000 / 334;
 
 export function Logo({ height = 32 }: { height?: number }) {
   return (
