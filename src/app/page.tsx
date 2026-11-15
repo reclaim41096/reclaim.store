@@ -27,7 +27,7 @@ export default async function HomePage() {
       </div>
       <Header />
 
-      <FullHero videoSrc="/videos/hero-wash.mp4" />
+      <FullHero videoSrc="/videos/hero-wash.mp4" posterSrc="/images/hero-poster.jpg" />
 
       {/* Categories */}
       <section className="px-6 py-16 md:px-12">
