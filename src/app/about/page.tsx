@@ -27,7 +27,7 @@ export default function AboutPage() {
         <span className="mb-4 inline-flex w-fit items-center gap-1.5 rounded-full bg-white px-3.5 py-1.5 text-[13px] font-semibold text-brand-dark">
           <LuBadgeCheck size={16} className="text-brand" /> Introducing Reclaim Cleaning Products
         </span>
-        <h1 className="max-w-3xl font-shout text-[28px] font-extrabold uppercase leading-[1.18] tracking-tight text-ink md:text-[42px]">
+        <h1 className="max-w-3xl font-shout text-[24px] font-bold uppercase leading-[1.3] tracking-[0.05em] [word-spacing:0.18em] text-ink md:text-[40px] md:leading-[1.25]">
           Cleaner spaces. Fresher living.
           <br />
           Better environments.
@@ -76,7 +76,7 @@ export default function AboutPage() {
       </section>
 
       <section className="mb-16 px-6 py-10 text-center md:px-12">
-        <h2 className="font-shout text-2xl font-extrabold uppercase tracking-tight text-brand md:text-4xl">
+        <h2 className="font-shout text-xl font-bold uppercase leading-snug tracking-[0.05em] [word-spacing:0.15em] text-brand md:text-4xl">
           Reclaim: Experience the Difference!
         </h2>
       </section>
