@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { LuMail, LuMapPin, LuPhone } from 'react-icons/lu';
-import { Logo } from './Logo';
 
 function FooterHeading({ children }: { children: React.ReactNode }) {
   return (
@@ -41,14 +40,7 @@ export function Footer() {
   return (
     <footer className="bg-brand-surface px-4 pb-8 pt-12 sm:px-6 md:px-12 md:pt-16">
       <div className="rounded-[2rem] border border-brand-border bg-white p-7 shadow-[0_20px_50px_-30px_rgba(227,30,36,0.35)] md:p-12">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1.5fr]">
-          <div>
-            <Logo height={34} />
-            <p className="mt-4 max-w-[260px] text-[14px] font-medium leading-relaxed text-ink-light">
-              Your trusted partner in cleanliness and freshness.
-            </p>
-          </div>
-
+        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1.6fr]">
           <div>
             <FooterHeading>Shop</FooterHeading>
             <div className="flex flex-col gap-2.5">
