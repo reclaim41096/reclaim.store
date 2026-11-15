@@ -36,12 +36,6 @@ export function FullHero({ videoSrc, posterSrc }: { videoSrc: string; posterSrc?
           >
             Shop Products
           </Link>
-          <Link
-            href="/contact"
-            className="rounded-full border border-white/40 px-6 py-3 text-[14px] md:px-7 md:py-3.5 md:text-[15px] font-semibold text-white hover:border-white hover:bg-white/10"
-          >
-            Wholesale Enquiries
-          </Link>
         </div>
       </div>
     </section>

@@ -22,9 +22,9 @@ export default async function HomePage() {
 
   return (
     <>
-      <div className="bg-ink px-4 py-2.5 text-center text-[13px] font-medium text-white">
-        Nationwide delivery • Wholesale pricing available for bulk orders
-      </div>
+      <Link href="/contact" className="block bg-ink px-4 py-2 text-center text-[12px] font-medium text-white hover:bg-brand-darker md:py-2.5 md:text-[13px]">
+        Nationwide delivery • Wholesale pricing for bulk orders: <span className="underline underline-offset-2">Enquire</span>
+      </Link>
       <Header />
 
       <FullHero videoSrc="/videos/hero-wash.mp4" posterSrc="/images/hero-poster.jpg" />
