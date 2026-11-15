@@ -27,9 +27,20 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [popKey, setPopKey] = useState(0);
+  // The link just tapped: shown red immediately (even while the next page loads)
+  const [pending, setPending] = useState<string | null>(null);
   const prevCount = useRef(count);
 
-  useEffect(() => setOpen(false), [pathname]);
+  useEffect(() => {
+    setOpen(false);
+    setPending(null);
+  }, [pathname]);
+
+  const isOn = (href: string) => (pending ? pending === href : isActive(pathname, href));
+  const onNavClick = (href: string) => {
+    if (href === pathname) setOpen(false); // already here: nothing will load, just close the menu
+    else setPending(href);
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -61,11 +72,12 @@ export function Header() {
         {/* Desktop nav: pill container, Lilita One */}
         <nav className="hidden items-center gap-1 rounded-full border border-brand-border bg-brand-tint/60 p-1.5 lg:flex">
           {NAV.map((l) => {
-            const active = isActive(pathname, l.href);
+            const active = isOn(l.href);
             return (
               <Link
                 key={l.href}
                 href={l.href}
+                onClick={() => onNavClick(l.href)}
                 className={`rounded-full px-5 py-2 font-nav text-[15px] tracking-wide ${
                   active
                     ? 'bg-brand text-white shadow-[0_4px_12px_-4px_rgba(227,30,36,0.6)]'
@@ -127,13 +139,14 @@ export function Header() {
           <nav className="absolute inset-x-0 top-full border-b border-brand-border bg-white px-4 pb-4 pt-2 shadow-lg lg:hidden">
             <div className="flex flex-col gap-1 rounded-2xl border border-brand-border bg-brand-surface p-1.5">
               {NAV.map((l) => {
-                const active = isActive(pathname, l.href);
+                const active = isOn(l.href);
                 return (
                   <Link
                     key={l.href}
                     href={l.href}
+                    onClick={() => onNavClick(l.href)}
                     className={`flex items-center justify-between rounded-xl px-4 py-2.5 font-nav text-[15px] tracking-wide ${
-                      active ? 'bg-brand text-white' : 'text-ink active:bg-brand-tint'
+                      active ? 'bg-brand text-white' : 'text-ink active:bg-brand active:text-white'
                     }`}
                   >
                     {l.label}
