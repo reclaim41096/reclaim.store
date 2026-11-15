@@ -68,7 +68,7 @@ export function ImageUploader({ images, onChange }: { images: string[]; onChange
               ) : (
                 <span />
               )}
-              <button type="button" onClick={() => remove(url)} aria-label="Remove image" className="flex h-7 w-7 items-center justify-center rounded-md text-ink-muted hover:bg-brand-tint hover:text-[#C13C3C]">
+              <button type="button" onClick={() => remove(url)} aria-label="Remove image" className="flex h-7 w-7 items-center justify-center rounded-md text-ink-muted hover:bg-brand-tint hover:text-danger">
                 <LuX size={15} />
               </button>
             </div>
@@ -90,7 +90,7 @@ export function ImageUploader({ images, onChange }: { images: string[]; onChange
         Any photo works: it&apos;s automatically cropped, placed on a white background and resized to the same square shot
         size. The first image is the cover.
       </p>
-      {error && <p className="mt-2 text-sm text-[#C13C3C]">{error}</p>}
+      {error && <p className="mt-2 text-sm text-danger">{error}</p>}
     </div>
   );
 }

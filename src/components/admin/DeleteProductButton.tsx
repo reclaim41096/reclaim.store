@@ -23,7 +23,7 @@ export function DeleteProductButton({ productId }: { productId: string }) {
       onClick={handleDelete}
       disabled={busy}
       aria-label="Delete"
-      className="rounded-lg p-1.5 text-ink-light hover:bg-[#FBE8E6] hover:text-[#C13C3C]"
+      className="rounded-lg p-1.5 text-ink-light hover:bg-brand-tint hover:text-danger"
     >
       <LuTrash2 size={18} />
     </button>

@@ -72,7 +72,7 @@ export default async function AdminDashboardPage() {
                 </tr>
               )}
               {recentOrders.map((o) => (
-                <tr key={o.order_code} className="border-t border-[#EEF2F0]">
+                <tr key={o.order_code} className="border-t border-brand-border">
                   <td className="py-2 font-semibold md:py-2.5">{o.order_code}</td>
                   <td className="py-2 md:py-2.5">{o.customer_name}</td>
                   <td className="py-2 md:py-2.5">{formatNaira(Number(o.total))}</td>
@@ -96,7 +96,7 @@ export default async function AdminDashboardPage() {
                   <div className="text-[13px] font-semibold">{v.products?.name}</div>
                   <div className="text-xs text-ink-faint">{v.stock} units left</div>
                 </div>
-                <span className="rounded-full bg-[#FDE4E4] px-2.5 py-1 text-[11px] font-bold text-[#C13C3C]">
+                <span className="rounded-full bg-danger-tint px-2.5 py-1 text-[11px] font-bold text-danger">
                   Low
                 </span>
               </div>
@@ -116,21 +116,21 @@ function StatCard({ label, value, warn, Icon }: { label: string; value: string; 
     <div className="rounded-2xl border border-brand-border bg-white p-3.5 md:p-5">
       <div className="flex items-center justify-between gap-2">
         <div className="text-[11px] font-semibold leading-tight text-ink-faint md:text-[13px]">{label}</div>
-        <span className={`flex h-7 w-7 flex-none items-center justify-center rounded-lg md:h-9 md:w-9 ${warn && value !== '0' ? 'bg-[#FDE4E4] text-[#C13C3C]' : 'bg-brand-tint text-brand'}`}>
+        <span className={`flex h-7 w-7 flex-none items-center justify-center rounded-lg md:h-9 md:w-9 ${warn && value !== '0' ? 'bg-danger-tint text-danger' : 'bg-brand-tint text-brand'}`}>
           <Icon className="h-[15px] w-[15px] md:h-[18px] md:w-[18px]" />
         </span>
       </div>
-      <div className={`mt-1.5 text-[19px] font-semibold md:mt-2 md:text-[26px] md:font-bold ${warn && value !== '0' ? 'text-[#C13C3C]' : ''}`}>{value}</div>
+      <div className={`mt-1.5 text-[19px] font-semibold md:mt-2 md:text-[26px] md:font-bold ${warn && value !== '0' ? 'text-danger' : ''}`}>{value}</div>
     </div>
   );
 }
 
 function StatusPill({ status }: { status: string }) {
   const styles: Record<string, string> = {
-    pending: 'bg-[#FDE4E4] text-[#C13C3C]',
-    processing: 'bg-[#FFF4D6] text-[#A6760A]',
-    delivered: 'bg-brand-tint text-brand',
-    cancelled: 'bg-[#F1F0E8] text-ink-light',
+    pending: 'bg-gold-tint text-gold-dark',
+    processing: 'bg-brand-tint text-brand-dark',
+    delivered: 'bg-success-tint text-success',
+    cancelled: 'bg-ink-tint text-ink-light',
   };
   return (
     <span className={`rounded-full px-2.5 py-1 text-xs font-semibold capitalize ${styles[status] ?? ''}`}>

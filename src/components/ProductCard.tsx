@@ -21,12 +21,12 @@ export function ProductCard({ product }: { product: ProductSummary }) {
     >
       <div className="relative flex aspect-square items-center justify-center overflow-hidden bg-brand-tint">
         {product.status === 'out_of_stock' && (
-          <span className="absolute left-2.5 top-2.5 rounded-full bg-[#FDE4E4] px-2.5 py-1 text-[11px] font-bold text-[#C13C3C]">
+          <span className="absolute left-2.5 top-2.5 rounded-full bg-danger-tint px-2.5 py-1 text-[11px] font-bold text-danger">
             Out of stock
           </span>
         )}
         {product.status === 'draft' && (
-          <span className="absolute left-2.5 top-2.5 rounded-full bg-[#F1F0E8] px-2.5 py-1 text-[11px] font-bold text-ink-light">
+          <span className="absolute left-2.5 top-2.5 rounded-full bg-ink-tint px-2.5 py-1 text-[11px] font-bold text-ink-light">
             Coming soon
           </span>
         )}

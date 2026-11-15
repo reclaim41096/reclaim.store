@@ -20,7 +20,7 @@ export function WhatsAppResend({ orderCode }: { orderCode: string }) {
       href={whatsappUrl(msg)}
       target="_blank"
       rel="noopener noreferrer"
-      className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#25D366] px-6 py-3.5 text-[15px] font-semibold text-white hover:brightness-95"
+      className="mb-4 inline-flex items-center gap-2 rounded-full bg-whatsapp hover:bg-whatsapp-dark px-6 py-3.5 text-[15px] font-semibold text-white"
     >
       <FaWhatsapp size={20} /> Open WhatsApp chat
     </a>

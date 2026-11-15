@@ -32,7 +32,7 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#FCF5F3] px-6">
+    <div className="flex min-h-screen items-center justify-center bg-brand-surface px-6">
       <form onSubmit={handleSubmit} className="w-full max-w-sm rounded-2xl border border-brand-border bg-white p-6 sm:p-8">
         <div className="mb-6 text-center">
           <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-brand-tint text-brand"><LuLock size={22} /></div>
@@ -61,7 +61,7 @@ export default function AdminLoginPage() {
           />
         </div>
 
-        {error && <p className="mb-4 text-sm text-[#C13C3C]">{error}</p>}
+        {error && <p className="mb-4 text-sm text-danger">{error}</p>}
 
         <button
           type="submit"

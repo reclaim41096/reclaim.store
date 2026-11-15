@@ -78,7 +78,7 @@ export default function CartPage() {
                   </div>
                   <button
                     aria-label="Remove"
-                    className="text-ink-faint hover:text-[#C13C3C]"
+                    className="text-ink-faint hover:text-danger"
                     onClick={() => removeItem(item.variantId)}
                   >
                     <LuX size={18} />

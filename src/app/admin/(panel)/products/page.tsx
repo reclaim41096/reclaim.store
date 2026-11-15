@@ -58,14 +58,14 @@ export default async function AdminProductsPage() {
                     : `${formatNaira(Math.min(...prices))}–${formatNaira(Math.max(...prices))}`;
 
               return (
-                <tr key={p.id} className="border-t border-[#EEF2F0] text-[12px] md:text-sm">
+                <tr key={p.id} className="border-t border-brand-border text-[12px] md:text-sm">
                   <td className="whitespace-nowrap px-3 py-2.5 md:px-4 md:py-3.5 font-semibold">{p.name}</td>
                   <td className="px-3 py-2.5 md:px-4 md:py-3.5 text-ink-light">
                     {p.category?.section?.name} / {p.category?.name}
                   </td>
                   <td className="px-3 py-2.5 md:px-4 md:py-3.5 text-ink-light">{(p.product_options ?? []).length || '—'}</td>
                   <td className="px-3 py-2.5 md:px-4 md:py-3.5 font-semibold">{priceLabel}</td>
-                  <td className={stock < 10 ? 'px-3 py-2.5 md:px-4 md:py-3.5 font-semibold text-[#C13C3C]' : 'px-3 py-2.5 md:px-4 md:py-3.5'}>
+                  <td className={stock < 10 ? 'px-3 py-2.5 md:px-4 md:py-3.5 font-semibold text-danger' : 'px-3 py-2.5 md:px-4 md:py-3.5'}>
                     {stock}
                   </td>
                   <td className="px-3 py-2.5 md:px-4 md:py-3.5">
@@ -75,7 +75,7 @@ export default async function AdminProductsPage() {
                     <div className="flex gap-1">
                       <Link
                         href={`/admin/products/${p.id}/edit`}
-                        className="rounded-lg p-1.5 text-ink-light hover:bg-[#FBE8E6]"
+                        className="rounded-lg p-1.5 text-ink-light hover:bg-brand-tint"
                         aria-label="Edit"
                       >
                         <LuPencil size={18} />
@@ -95,9 +95,9 @@ export default async function AdminProductsPage() {
 
 function StatusPill({ status }: { status: string }) {
   const styles: Record<string, string> = {
-    active: 'bg-brand-tint text-brand',
-    draft: 'bg-[#F1F0E8] text-ink-light',
-    out_of_stock: 'bg-[#FDE4E4] text-[#C13C3C]',
+    active: 'bg-success-tint text-success',
+    draft: 'bg-ink-tint text-ink-light',
+    out_of_stock: 'bg-danger-tint text-danger',
   };
   const labels: Record<string, string> = { active: 'Active', draft: 'Draft', out_of_stock: 'Out of stock' };
   return (

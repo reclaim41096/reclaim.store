@@ -17,14 +17,14 @@ const ICONS: Record<string, IconType> = {
 
 type Props = { slug: string; size?: number; color?: string };
 
-export function CategoryIcon({ slug, size = 24, color = '#E31E24' }: Props) {
+export function CategoryIcon({ slug, size = 24, color = 'var(--c-brand)' }: Props) {
   if (slug === 'other-household') return <CatalogIcon size={size} color={color} />;
   const Icon = ICONS[slug] ?? LuDroplets;
   return <Icon size={size} color={color} aria-hidden />;
 }
 
 /** Unique catalog icon: a home with a sparkle — "everything clean for your home". */
-export function CatalogIcon({ size = 24, color = '#E31E24' }: { size?: number; color?: string }) {
+export function CatalogIcon({ size = 24, color = 'var(--c-brand)' }: { size?: number; color?: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
       <path
@@ -43,8 +43,8 @@ export function CatalogIcon({ size = 24, color = '#E31E24' }: { size?: number; c
       />
       <path
         d="M12 9.2c.35 1.9 1.3 2.85 3.2 3.2-1.9.35-2.85 1.3-3.2 3.2-.35-1.9-1.3-2.85-3.2-3.2 1.9-.35 2.85-1.3 3.2-3.2Z"
-        fill="#F2B705"
-        stroke="#F2B705"
+        fill="var(--c-gold)"
+        stroke="var(--c-gold)"
         strokeWidth="0.6"
         strokeLinejoin="round"
       />

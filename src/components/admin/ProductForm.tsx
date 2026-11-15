@@ -330,14 +330,14 @@ export function ProductForm({ categories, initial }: { categories: Category[]; i
               <button
                 type="button"
                 onClick={addOption}
-                className="inline-flex flex-none items-center justify-center gap-1.5 rounded-lg border border-brand/30 bg-brand-tint px-3.5 py-2 text-sm font-semibold text-brand hover:bg-brand hover:text-white"
+                className="inline-flex flex-none items-center justify-center gap-1.5 rounded-lg border border-brand/30 bg-brand-tint px-3.5 py-2 text-sm font-semibold text-brand-dark hover:bg-brand hover:text-white"
               >
                 <LuPlus size={16} /> Add option
               </button>
             </div>
 
             {options.length === 0 ? (
-              <p className="mb-4 rounded-xl bg-[#FBF7F6] p-3.5 text-sm text-ink-faint">
+              <p className="mb-4 rounded-xl bg-brand-surface p-3.5 text-sm text-ink-faint">
                 No options. This product has a single variant.
               </p>
             ) : (
@@ -355,7 +355,7 @@ export function ProductForm({ categories, initial }: { categories: Category[]; i
                         type="button"
                         onClick={() => removeOption(opt.id)}
                         aria-label="Remove option"
-                        className="flex h-10 w-10 flex-none items-center justify-center rounded-lg text-ink-faint hover:bg-brand-tint hover:text-[#C13C3C]"
+                        className="flex h-10 w-10 flex-none items-center justify-center rounded-lg text-ink-faint hover:bg-brand-tint hover:text-danger"
                       >
                         <LuX size={18} />
                       </button>
@@ -373,7 +373,7 @@ export function ProductForm({ categories, initial }: { categories: Category[]; i
 
             <div className="flex flex-col gap-3">
               {variantRows.map((row) => (
-                <div key={row.label} className="rounded-xl border border-brand-border bg-[#FEFBFA] p-3.5">
+                <div key={row.label} className="rounded-xl border border-brand-border bg-brand-surface p-3.5">
                   <div className="mb-3 flex items-center gap-3">
                     <label className="relative flex h-14 w-14 flex-none cursor-pointer items-center justify-center overflow-hidden rounded-lg border border-dashed border-brand-border bg-white text-ink-faint hover:border-brand hover:text-brand">
                       {uploadingFor === row.label ? (
@@ -460,7 +460,7 @@ export function ProductForm({ categories, initial }: { categories: Category[]; i
                 <input inputMode="numeric" value={wholesalePrice} onChange={(e) => setWholesalePrice(e.target.value)} placeholder="1200" />
               </Field>
               <label className="flex items-center gap-2.5 text-sm text-ink-muted">
-                <input type="checkbox" className="h-4 w-4 accent-[#E31E24]" checked={wholesaleAvailable} onChange={(e) => setWholesaleAvailable(e.target.checked)} />
+                <input type="checkbox" className="h-4 w-4 accent-brand" checked={wholesaleAvailable} onChange={(e) => setWholesaleAvailable(e.target.checked)} />
                 Available for wholesale
               </label>
             </div>
@@ -477,7 +477,7 @@ export function ProductForm({ categories, initial }: { categories: Category[]; i
       {/* Sticky save bar */}
       <div className="fixed inset-x-0 bottom-0 z-20 border-t border-brand-border bg-white/95 px-4 py-3 backdrop-blur md:left-60 md:px-10">
         <div className="mx-auto flex max-w-[1200px] items-center gap-3">
-          <p className="min-w-0 flex-1 truncate text-sm text-[#C13C3C]">{error}</p>
+          <p className="min-w-0 flex-1 truncate text-sm text-danger">{error}</p>
           <Link href="/admin/products" className="rounded-lg border border-brand-border px-4 py-2.5 text-sm font-semibold text-ink-muted hover:bg-brand-tint">
             Cancel
           </Link>

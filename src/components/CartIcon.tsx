@@ -15,9 +15,9 @@ export function CartIcon({ size = 26 }: { size?: number }) {
         strokeLinejoin="round"
       />
       {/* bubbles */}
-      <circle className="bubble-a" cx="10.2" cy="17.6" r="1.9" fill="#E31E24" />
-      <circle className="bubble-b" cx="15.2" cy="20.4" r="1.4" fill="#E31E24" />
-      <circle className="bubble-c" cx="18.4" cy="16.2" r="1.1" fill="#F2B705" />
+      <circle className="bubble-a" cx="10.2" cy="17.6" r="1.9" fill="var(--c-brand)" />
+      <circle className="bubble-b" cx="15.2" cy="20.4" r="1.4" fill="var(--c-brand)" />
+      <circle className="bubble-c" cx="18.4" cy="16.2" r="1.1" fill="var(--c-gold)" />
     </svg>
   );
 }

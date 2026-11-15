@@ -22,7 +22,7 @@ export function AdminSidebar({ email }: { email: string | null }) {
   const brand = (
     <div className="flex items-center gap-2.5">
       <Logo height={30} glossy />
-      <span className="rounded-full bg-brand-tint px-2 py-0.5 font-nav text-[11px] tracking-wide text-brand">Admin</span>
+      <span className="rounded-full bg-brand-tint px-2 py-0.5 font-nav text-[11px] tracking-wide text-brand-dark">Admin</span>
     </div>
   );
 
@@ -60,7 +60,7 @@ export function AdminSidebar({ email }: { email: string | null }) {
               key={href}
               href={href}
               className={`flex items-center gap-3 rounded-lg px-4 py-2.5 font-nav text-[15px] tracking-wide ${
-                active ? 'bg-ink text-white' : 'text-[#4E5B55] hover:bg-[#FBE8E6] hover:text-ink'
+                active ? 'bg-brand text-white' : 'text-ink-muted hover:bg-brand-tint hover:text-ink'
               }`}
             >
               <Icon size={18} />
@@ -69,10 +69,10 @@ export function AdminSidebar({ email }: { email: string | null }) {
           );
         })}
 
-        <div className="mt-auto flex flex-col gap-3 border-t border-[#EEF2F0] pt-4">
+        <div className="mt-auto flex flex-col gap-3 border-t border-brand-border pt-4">
           {email && (
             <div className="flex items-center gap-2.5 px-2.5 text-[13px]">
-              <div className="flex h-8 w-8 flex-none items-center justify-center rounded-full bg-brand-tint text-sm font-bold text-brand">
+              <div className="flex h-8 w-8 flex-none items-center justify-center rounded-full bg-brand-tint text-sm font-bold text-brand-dark">
                 {email[0]?.toUpperCase()}
               </div>
               <div className="truncate text-ink-light">{email}</div>

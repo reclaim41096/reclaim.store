@@ -65,7 +65,7 @@ export default function AboutPage() {
           <h2 className="mb-2.5 flex items-center gap-3 font-display text-xl font-semibold text-white md:text-2xl md:font-bold">
             <LuPhoneCall size={24} className="flex-none text-brand" /> Contact us today
           </h2>
-          <p className="text-[15px] leading-relaxed text-[#B9C7BF]">
+          <p className="text-[15px] leading-relaxed text-white/75">
             For enquiries, orders and wholesale supplies — reach out and we&apos;ll be happy to
             help.
           </p>

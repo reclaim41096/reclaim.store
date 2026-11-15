@@ -39,7 +39,7 @@ function ContactRow({ Icon, children, href }: { Icon: typeof LuPhone; children: 
 
 export function Footer() {
   return (
-    <footer className="bg-[#FCF5F3] px-4 pb-8 pt-12 sm:px-6 md:px-12 md:pt-16">
+    <footer className="bg-brand-surface px-4 pb-8 pt-12 sm:px-6 md:px-12 md:pt-16">
       <div className="rounded-[2rem] border border-brand-border bg-white p-7 shadow-[0_20px_50px_-30px_rgba(227,30,36,0.35)] md:p-12">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1.5fr]">
           <div>

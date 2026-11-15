@@ -31,7 +31,7 @@ export default async function HomePage() {
 
       {/* Categories */}
       <section className="px-6 py-16 md:px-12">
-        <span className="mb-2 inline-block rounded-full bg-brand-tint px-4 py-1.5 text-[13px] font-bold text-brand">
+        <span className="mb-2 inline-block rounded-full bg-brand-tint px-4 py-1.5 text-[13px] font-bold text-brand-dark">
           Products
         </span>
         <div className="mb-7 flex flex-wrap items-baseline justify-between gap-3">
@@ -60,7 +60,7 @@ export default async function HomePage() {
       </section>
 
       {/* Best sellers */}
-      <section className="bg-[#FCF7F6] px-6 py-16 md:px-12">
+      <section className="bg-brand-surface px-6 py-16 md:px-12">
         <div className="mb-7 flex flex-wrap items-baseline justify-between gap-3">
           <h2 className="font-display text-[22px] font-semibold md:text-[28px] md:font-bold">Best sellers</h2>
           <Link href="/shop" className="text-sm font-semibold">
@@ -80,7 +80,7 @@ export default async function HomePage() {
       <section className="mx-6 mb-12 flex flex-wrap items-center justify-between gap-6 rounded-3xl bg-ink p-8 md:mx-12 md:p-12">
         <div className="max-w-[560px]">
           <h2 className="mb-2.5 font-display text-xl font-semibold text-white md:text-2xl md:font-bold">About Reclaim</h2>
-          <p className="text-[15px] leading-relaxed text-[#B9C7BF]">
+          <p className="text-[15px] leading-relaxed text-white/75">
             A Lagos-based brand across two lines: cleaning products for home and business, and
             natural Tissa honey. Wholesale pricing available on bulk orders.
           </p>

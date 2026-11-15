@@ -54,7 +54,7 @@ export function ProductListing({
                 onClick={() => setFilter(c.slug)}
                 className={`flex-none whitespace-nowrap rounded-full border px-4 py-2 text-[13px] font-semibold ${
                   filter === c.slug
-                    ? 'border-ink bg-ink text-white'
+                    ? 'border-brand bg-brand-tint text-brand-dark'
                     : 'border-brand-border bg-white text-ink-muted hover:border-brand hover:text-brand'
                 }`}
               >

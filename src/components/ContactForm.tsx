@@ -102,7 +102,7 @@ export function ContactForm() {
       </div>
 
       {status === 'error' && (
-        <p className="col-span-12 text-sm text-[#C13C3C]">
+        <p className="col-span-12 text-sm text-danger">
           Please fill in your name, email and message, then try again.
         </p>
       )}

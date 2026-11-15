@@ -14,7 +14,7 @@ export function CheckoutSteps({ current }: { current: 1 | 2 | 3 }) {
                 state === 'current'
                   ? 'bg-brand text-white'
                   : state === 'done'
-                    ? 'bg-brand-tint text-brand'
+                    ? 'bg-brand-tint text-brand-dark'
                     : 'border border-brand-border text-ink-faint'
               }`}
             >

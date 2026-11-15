@@ -229,7 +229,7 @@ export default function CheckoutPage() {
                   value={form.city}
                   disabled={!form.state}
                   onChange={(e) => setForm((f) => ({ ...f, city: e.target.value }))}
-                  className="disabled:bg-[#FBF7F6] disabled:text-ink-faint"
+                  className="disabled:bg-brand-surface disabled:text-ink-faint"
                 >
                   <option value="">{form.state ? 'Select city' : 'Select a state first'}</option>
                   {cities.map((c) => (
@@ -322,7 +322,7 @@ export default function CheckoutPage() {
             <span>{formatNaira(total)}</span>
           </div>
 
-          {error && <p className="text-sm text-[#C13C3C]">{error}</p>}
+          {error && <p className="text-sm text-danger">{error}</p>}
 
           <button
             onClick={handleSubmit}

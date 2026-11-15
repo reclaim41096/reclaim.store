@@ -44,7 +44,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
 
   const related = await getRelatedProducts(product.category.slug, product.slug, 4);
   const isBeverage = product.category.section.slug === 'beverages';
-  const iconColor = '#E31E24';
+  const iconColor = 'var(--c-brand)';
   const tint = 'bg-brand-tint';
   const shopHref = isBeverage ? '/beverages' : '/shop';
 
@@ -101,7 +101,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
       <div className="px-6 pb-6 md:px-12">
         <p className="max-w-2xl text-sm leading-relaxed text-ink-muted">{product.description}</p>
 
-        <div className="mt-5 flex flex-wrap gap-5 rounded-2xl bg-[#FCF7F6] p-4 max-w-2xl">
+        <div className="mt-5 flex flex-wrap gap-5 rounded-2xl bg-brand-surface p-4 max-w-2xl">
           <span className="flex items-center gap-2 text-[13px] text-ink-muted"><LuTruck size={18} className="text-brand" /> Fast delivery nationwide</span>
           <span className="flex items-center gap-2 text-[13px] text-ink-muted"><LuShieldCheck size={18} className="text-brand" /> Safe, tested formula</span>
           {product.wholesale_available && (
@@ -111,7 +111,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
       </div>
 
       {related.length > 0 && (
-        <section className="bg-[#FCF7F6] px-6 py-16 md:px-12">
+        <section className="bg-brand-surface px-6 py-16 md:px-12">
           <h2 className="mb-5 font-display text-xl font-semibold md:mb-6 md:text-2xl md:font-bold">You may also like</h2>
           <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
             {related.map((p: any) => (
