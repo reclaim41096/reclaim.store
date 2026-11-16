@@ -343,16 +343,17 @@ export function ProductForm({ categories, initial }: { categories: Category[]; i
 
             <div className="mb-5 rounded-xl border border-brand-border bg-brand-surface p-3.5">
               <Field
-                label="Price is per (optional)"
-                hint='Shows on the shop as "Price per carton" etc. Leave empty if the price is for a single item.'
+                label="Fill all variants' unit (optional)"
+                hint='Quickly sets "Unit" below for every variant at once — e.g. all "carton of 12". If different sizes sell in different carton counts (1L in cartons of 12, 4L in cartons of 4), leave this blank and set each variant&apos;s unit individually below.'
               >
-                <input list="price-units" value={commonUnit} onChange={(e) => setCommonUnit(e.target.value)} placeholder="e.g. carton, piece, dozen" />
+                <input list="price-units" value={commonUnit} onChange={(e) => setCommonUnit(e.target.value)} placeholder="e.g. carton of 12, piece" />
                 <datalist id="price-units">
-                  <option value="carton" />
+                  <option value="carton of 4" />
+                  <option value="carton of 6" />
+                  <option value="carton of 12" />
                   <option value="piece" />
                   <option value="dozen" />
                   <option value="pack" />
-                  <option value="litre" />
                 </datalist>
               </Field>
             </div>
@@ -419,7 +420,7 @@ export function ProductForm({ categories, initial }: { categories: Category[]; i
                       </div>
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-[1.4fr_1fr_1fr]">
+                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-[1.2fr_0.85fr_1fr_0.75fr]">
                     <Field label="SKU" className="col-span-2 sm:col-span-1">
                       <input
                         value={row.sku}
@@ -429,6 +430,14 @@ export function ProductForm({ categories, initial }: { categories: Category[]; i
                     </Field>
                     <Field label="Price (₦)">
                       <input inputMode="numeric" value={row.price} onChange={(e) => updateVariant(row.label, { price: e.target.value })} />
+                    </Field>
+                    <Field label="Unit" hint={row.priceUnit ? undefined : 'e.g. carton of 12'}>
+                      <input
+                        list="price-units"
+                        value={row.priceUnit ?? ''}
+                        onChange={(e) => updateVariant(row.label, { priceUnit: e.target.value || null })}
+                        placeholder="carton of 12"
+                      />
                     </Field>
                     <Field label="Stock">
                       <input inputMode="numeric" value={row.stock} onChange={(e) => updateVariant(row.label, { stock: e.target.value })} />

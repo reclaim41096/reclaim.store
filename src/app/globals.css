@@ -140,6 +140,20 @@ html {
   animation-delay: var(--rise-delay, 0ms);
 }
 
+/* iOS/Android auto-zoom on focus: both browsers zoom the viewport in when a
+   tapped text input's font-size is below 16px, then don't zoom back out on
+   their own — it stays until the user pinches. Forcing 16px on every text
+   field under the mobile breakpoint stops the zoom from triggering at all,
+   on admin, product pages and the main site alike. Desktop keeps each
+   component's own (smaller) font-size since this only applies below 768px. */
+@media (max-width: 767px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }

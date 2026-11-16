@@ -3,16 +3,17 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LuLayoutDashboard, LuMenu, LuPackage, LuX } from 'react-icons/lu';
+import { LuLayoutDashboard, LuMenu, LuMessageSquare, LuPackage, LuX } from 'react-icons/lu';
 import { SignOutButton } from './SignOutButton';
 import { Logo } from '../Logo';
 
 const LINKS = [
   { href: '/admin', label: 'Dashboard', Icon: LuLayoutDashboard },
   { href: '/admin/products', label: 'Products', Icon: LuPackage },
+  { href: '/admin/messages', label: 'Messages', Icon: LuMessageSquare },
 ];
 
-export function AdminSidebar({ email }: { email: string | null }) {
+export function AdminSidebar({ email, unreadMessages = 0 }: { email: string | null; unreadMessages?: number }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -55,6 +56,7 @@ export function AdminSidebar({ email }: { email: string | null }) {
 
         {LINKS.map(({ href, label, Icon }) => {
           const active = href === '/admin' ? pathname === '/admin' : pathname.startsWith(href);
+          const badge = href === '/admin/messages' ? unreadMessages : 0;
           return (
             <Link
               key={href}
@@ -65,6 +67,15 @@ export function AdminSidebar({ email }: { email: string | null }) {
             >
               <Icon size={18} />
               {label}
+              {badge > 0 && (
+                <span
+                  className={`ml-auto flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[11px] font-bold ${
+                    active ? 'bg-white text-brand' : 'bg-brand text-white'
+                  }`}
+                >
+                  {badge}
+                </span>
+              )}
             </Link>
           );
         })}

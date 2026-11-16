@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 import { formatNaira } from '@/lib/format';
 import type { IconType } from 'react-icons';
-import { LuArrowRight, LuBanknote, LuPackage, LuPlus, LuReceipt, LuTriangleAlert } from 'react-icons/lu';
+import { LuArrowRight, LuBanknote, LuMessageSquare, LuPackage, LuPlus, LuReceipt, LuTriangleAlert } from 'react-icons/lu';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,6 +17,11 @@ export default async function AdminDashboardPage() {
   const { count: productCount } = await supabase
     .from('products')
     .select('id', { count: 'exact', head: true });
+
+  const { count: newMessages } = await supabase
+    .from('contact_messages')
+    .select('id', { count: 'exact', head: true })
+    .eq('status', 'new');
 
   const { data: lowStock } = await supabase
     .from('product_variants')
@@ -43,11 +48,14 @@ export default async function AdminDashboardPage() {
         </Link>
       </div>
 
-      <div className="mb-5 grid grid-cols-2 gap-3 md:mb-7 md:gap-5 lg:grid-cols-4">
+      <div className="mb-5 grid grid-cols-2 gap-3 md:mb-7 md:gap-5 lg:grid-cols-5">
         <StatCard label="Total Revenue" value={formatNaira(revenue)} Icon={LuBanknote} />
         <StatCard label="Orders" value={String((orders ?? []).length)} Icon={LuReceipt} />
         <StatCard label="Products" value={String(productCount ?? 0)} Icon={LuPackage} />
         <StatCard label="Low Stock Variants" value={String((lowStock ?? []).length)} Icon={LuTriangleAlert} warn />
+        <Link href="/admin/messages">
+          <StatCard label="New Messages" value={String(newMessages ?? 0)} Icon={LuMessageSquare} warn />
+        </Link>
       </div>
 
       <div className="flex flex-wrap gap-5">

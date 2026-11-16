@@ -1,9 +1,51 @@
+'use client';
+
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 
 export function FullHero({ videoSrc, posterSrc }: { videoSrc: string; posterSrc?: string }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Mobile browsers (iOS Safari in particular) pause a backgrounded <video>
+  // and don't resume it on their own even with `loop` set — the clip stays
+  // frozen until the user manually taps play again. Explicitly resume it
+  // whenever the tab/app becomes visible again, and treat any unexpected
+  // pause (while the page itself is visible) as something to recover from too.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const tryPlay = () => {
+      video.play().catch(() => {
+        // Autoplay can be rejected if nothing has synced yet — ignore, it'll
+        // resume on the next visibility/interaction event.
+      });
+    };
+
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') tryPlay();
+    };
+    const handlePause = () => {
+      if (document.visibilityState === 'visible') tryPlay();
+    };
+
+    document.addEventListener('visibilitychange', handleVisibility);
+    window.addEventListener('pageshow', tryPlay);
+    window.addEventListener('focus', tryPlay);
+    video.addEventListener('pause', handlePause);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibility);
+      window.removeEventListener('pageshow', tryPlay);
+      window.removeEventListener('focus', tryPlay);
+      video.removeEventListener('pause', handlePause);
+    };
+  }, []);
+
   return (
     <section className="relative flex min-h-[420px] w-full items-center overflow-hidden bg-ink py-12 md:h-[640px] md:py-0">
       <video
+        ref={videoRef}
         className="absolute inset-0 h-full w-full object-cover"
         src={videoSrc}
         poster={posterSrc}
