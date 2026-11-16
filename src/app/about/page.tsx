@@ -27,10 +27,9 @@ export default function AboutPage() {
         <span className="mb-4 inline-flex w-fit items-center gap-1.5 rounded-full bg-white px-3.5 py-1.5 text-[13px] font-semibold text-brand-dark">
           <LuBadgeCheck size={16} className="text-brand" /> Introducing Reclaim Cleaning Products
         </span>
-        <h1 className="max-w-3xl font-shout text-[24px] font-bold uppercase leading-[1.3] tracking-[0.05em] [word-spacing:0.18em] text-ink md:text-[40px] md:leading-[1.25]">
-          Cleaner spaces. Fresher living.
-          <br />
-          Better environments.
+        <h1 className="max-w-3xl font-shout text-[24px] font-bold uppercase leading-[1.55] tracking-[0.08em] [word-spacing:0.3em] text-ink md:text-[40px] md:leading-[1.5]">
+          <span className="block">Cleaner spaces. Fresher living.</span>
+          <span className="mt-1.5 block md:mt-2.5">Better environments.</span>
         </h1>
         <p className="mt-6 max-w-2xl text-[15px] leading-relaxed text-ink-muted md:text-[17px]">
           Looking for reliable and affordable cleaning solutions for your home, office or
