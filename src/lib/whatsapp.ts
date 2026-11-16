@@ -3,6 +3,22 @@ import { formatNaira } from './format';
 // Reclaim's WhatsApp number in international format, digits only (set NEXT_PUBLIC_WHATSAPP_NUMBER to override).
 export const WHATSAPP_NUMBER = (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '2347079969990').replace(/\D/g, '');
 
+/**
+ * Customers type their phone number in whatever format they're used to —
+ * usually local Nigerian format with a leading 0 (e.g. "0902 756 9537"),
+ * sometimes already international ("234..." or "+234..."). wa.me links only
+ * work with the international form and no leading 0, so normalise it here
+ * before building a wa.me link for a number we didn't collect ourselves
+ * (unlike WHATSAPP_NUMBER above, which is already stored correctly).
+ */
+export function toWhatsAppNumber(raw: string): string {
+  const digits = raw.replace(/\D/g, '');
+  if (digits.startsWith('234')) return digits;
+  if (digits.startsWith('0')) return `234${digits.slice(1)}`;
+  if (digits.length === 10) return `234${digits}`; // no leading 0, no country code
+  return digits;
+}
+
 type Line = { productName: string; variantLabel: string | null; unitPrice: number; quantity: number };
 
 export type OrderData = {

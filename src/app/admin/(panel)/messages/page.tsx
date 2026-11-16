@@ -12,6 +12,7 @@ import {
   LuTriangleAlert,
 } from 'react-icons/lu';
 import { FaWhatsapp } from 'react-icons/fa6';
+import { toWhatsAppNumber } from '@/lib/whatsapp';
 
 type Message = {
   id: string;
@@ -319,7 +320,7 @@ export default function AdminMessagesPage() {
                 )}
                 {selected.phone && (
                   <a
-                    href={`https://wa.me/${selected.phone.replace(/\D/g, '')}?text=${encodeURIComponent(
+                    href={`https://wa.me/${toWhatsAppNumber(selected.phone)}?text=${encodeURIComponent(
                       `Hi ${selected.name}, thanks for reaching out to Reclaim! `,
                     )}`}
                     target="_blank"
