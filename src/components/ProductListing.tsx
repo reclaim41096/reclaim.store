@@ -69,7 +69,7 @@ export function ProductListing({
         <div className="mb-5 text-sm text-ink-light">
           {visible.length} {visible.length === 1 ? 'product' : 'products'}
         </div>
-        <div className="grid grid-cols-1 gap-5 min-[480px]:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-5 min-[480px]:grid-cols-2 lg:grid-cols-4">
           {visible.map((p, i) => (
             <Reveal key={p.id} delay={Math.min(i, 6) * 60}>
               <ProductCard product={p} />
