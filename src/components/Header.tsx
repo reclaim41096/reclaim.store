@@ -7,6 +7,7 @@ import { LuChevronRight, LuMenu, LuX } from 'react-icons/lu';
 import { useCart } from './CartProvider';
 import { CartIcon } from './CartIcon';
 import { Logo } from './Logo';
+import { SearchBar } from './SearchBar';
 
 const NAV = [
   { href: '/', label: 'Home' },
@@ -102,6 +103,7 @@ export function Header() {
         </Link>
 
         <div className="flex items-center gap-2 sm:gap-3">
+          <SearchBar />
           <Link
             href="/cart"
             aria-label={`Cart${count ? `, ${count} items` : ''}`}
@@ -116,12 +118,6 @@ export function Header() {
                 {count}
               </span>
             )}
-          </Link>
-          <Link
-            href="/shop"
-            className="hidden rounded-full bg-brand px-5 py-2.5 font-nav text-[15px] tracking-wide text-white hover:bg-brand-dark sm:block"
-          >
-            Shop Now
           </Link>
           <button
             type="button"
@@ -157,12 +153,6 @@ export function Header() {
                 );
               })}
             </div>
-            <Link
-              href="/shop"
-              className="mt-3 block rounded-full bg-brand py-2.5 text-center font-nav text-[15px] tracking-wide text-white active:bg-brand-dark"
-            >
-              Shop Now
-            </Link>
           </nav>
         </>
       )}
