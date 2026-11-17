@@ -43,9 +43,9 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="grid grid-cols-12 gap-x-6 gap-y-10">
-      {/* 01 — Name: wide, flush left */}
-      <div className="col-span-12 sm:col-span-7">
+    <form onSubmit={handleSubmit} className="grid grid-cols-12 gap-x-6 gap-y-8">
+      {/* 01 — Name */}
+      <div className="col-span-12 sm:col-span-6">
         <NumberedField n="01" label="Your Name">
           <input
             value={form.name}
@@ -55,8 +55,8 @@ export function ContactForm() {
         </NumberedField>
       </div>
 
-      {/* 02 — Phone: narrow, pushed down + right */}
-      <div className="col-span-12 sm:col-span-5 sm:mt-10">
+      {/* 02 — Phone */}
+      <div className="col-span-12 sm:col-span-6">
         <NumberedField n="02" label="Phone Number (optional)">
           <input
             value={form.phone}
@@ -66,8 +66,8 @@ export function ContactForm() {
         </NumberedField>
       </div>
 
-      {/* 03 — Email: offset right, narrower */}
-      <div className="col-span-12 sm:col-span-8 sm:col-start-5 sm:-mt-4">
+      {/* 03 — Email */}
+      <div className="col-span-12 sm:col-span-6">
         <NumberedField n="03" label="Email Address">
           <input
             type="email"
@@ -78,8 +78,8 @@ export function ContactForm() {
         </NumberedField>
       </div>
 
-      {/* 04 — Subject: flush left, narrow */}
-      <div className="col-span-12 sm:col-span-6 sm:mt-4">
+      {/* 04 — Subject */}
+      <div className="col-span-12 sm:col-span-6">
         <NumberedField n="04" label="Subject (optional)">
           <input
             value={form.subject}
@@ -90,7 +90,7 @@ export function ContactForm() {
       </div>
 
       {/* 05 — Message: full width */}
-      <div className="col-span-12 sm:mt-6">
+      <div className="col-span-12">
         <NumberedField n="05" label="Message">
           <textarea
             value={form.message}
