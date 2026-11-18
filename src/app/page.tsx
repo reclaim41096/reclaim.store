@@ -43,7 +43,7 @@ export default async function HomePage() {
         <div className="grid grid-cols-1 gap-5 min-[480px]:grid-cols-2 lg:grid-cols-3">
           {cleaningCategories.map((c, i) => (
             <Reveal key={c.id} delay={i * 70}>
-              <CategoryCard href="/shop" slug={c.slug} name={c.name} description={c.description} />
+              <CategoryCard href={`/shop?category=${c.slug}`} slug={c.slug} name={c.name} description={c.description} />
             </Reveal>
           ))}
           {honey && (

@@ -1,7 +1,8 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import Link from 'next/link';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Reveal } from './Reveal';
 import { ProductCard } from './ProductCard';
 import type { ProductSummary } from '@/lib/queries';
@@ -21,7 +22,19 @@ export function ProductListing({
     products.forEach((p) => seen.set(p.category.slug, p.category.name));
     return Array.from(seen, ([slug, name]) => ({ slug, name }));
   }, [products]);
-  const [filter, setFilter] = useState<string>('all');
+
+  // Which category is active lives in the URL (?category=slug), so a link from
+  // anywhere on the site (homepage category cards, search suggestions) lands
+  // directly on the filtered view, and the filter stays shareable/bookmarkable.
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const requestedCategory = searchParams.get('category');
+  const filter = requestedCategory && categories.some((c) => c.slug === requestedCategory) ? requestedCategory : 'all';
+  const setFilter = (slug: string) => {
+    const query = slug === 'all' ? '' : `?category=${slug}`;
+    router.push(`${pathname}${query}`, { scroll: false });
+  };
   const visible = filter === 'all' ? products : products.filter((p) => p.category.slug === filter);
 
   const tab = (on: boolean) =>
