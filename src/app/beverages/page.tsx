@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ProductListing } from '@/components/ProductListing';
@@ -16,7 +17,9 @@ export default async function BeveragesPage() {
   return (
     <>
       <Header />
-      <ProductListing title="Beverages" active="beverages" products={beverages} />
+      <Suspense fallback={null}>
+        <ProductListing title="Beverages" active="beverages" products={beverages} />
+      </Suspense>
       <Footer />
     </>
   );

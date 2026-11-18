@@ -45,6 +45,36 @@ function useProductSearch(query: string) {
   return { results, loading };
 }
 
+/** Real categories already on the site — doubles as quick filters and search shortcuts. */
+const POPULAR_SEARCHES = [
+  { name: 'Hand Wash', href: '/shop?category=hand-wash' },
+  { name: 'Air Freshener', href: '/shop?category=air-freshener' },
+  { name: 'Glass Cleaner', href: '/shop?category=glass-cleaner' },
+  { name: 'Multipurpose Cleaner', href: '/shop?category=multipurpose-cleaner' },
+  { name: 'Toilet & Bathroom', href: '/shop?category=toilet-bathroom' },
+  { name: 'Beverages', href: '/beverages' },
+];
+
+function SuggestionsPanel({ onPick }: { onPick: () => void }) {
+  return (
+    <div className="absolute left-0 right-0 top-full z-50 mt-2 rounded-2xl border border-brand-border bg-white p-4 shadow-[0_18px_40px_-16px_rgba(0,0,0,0.25)]">
+      <div className="mb-2.5 text-[11px] font-bold uppercase tracking-wide text-ink-faint">Popular searches</div>
+      <div className="flex flex-wrap gap-2">
+        {POPULAR_SEARCHES.map((s) => (
+          <Link
+            key={s.name}
+            href={s.href}
+            onClick={onPick}
+            className="rounded-full bg-ink-tint px-3.5 py-1.5 text-[13px] font-medium text-ink-muted hover:bg-brand-tint hover:text-brand-dark"
+          >
+            {s.name}
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function ResultsDropdown({
   query,
   results,
@@ -152,9 +182,12 @@ export function SearchBar() {
             Search
           </button>
         </form>
-        {focusedVariant === 'desktop' && (
-          <ResultsDropdown query={query} results={results} loading={loading} onPick={pickResult} />
-        )}
+        {focusedVariant === 'desktop' &&
+          (query.trim().length < 2 ? (
+            <SuggestionsPanel onPick={pickResult} />
+          ) : (
+            <ResultsDropdown query={query} results={results} loading={loading} onPick={pickResult} />
+          ))}
       </div>
 
       {/* Mobile: icon toggles a full-width search panel below the header */}
@@ -207,7 +240,11 @@ export function SearchBar() {
             </form>
             {focusedVariant === 'mobile' && (
               <div className="relative">
-                <ResultsDropdown query={query} results={results} loading={loading} onPick={pickResult} />
+                {query.trim().length < 2 ? (
+                  <SuggestionsPanel onPick={pickResult} />
+                ) : (
+                  <ResultsDropdown query={query} results={results} loading={loading} onPick={pickResult} />
+                )}
               </div>
             )}
           </div>
